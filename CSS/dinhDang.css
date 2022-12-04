@@ -1,0 +1,12 @@
+#bold{
+    font-weight: bold;
+    font-style: italic;
+}
+#p1{
+    font-family: 'Times New Roman', Times, serif;
+    color: violet;
+    font-size: 2em;
+    text-align: justify;
+    width: 80%;
+    margin: auto;
+}
