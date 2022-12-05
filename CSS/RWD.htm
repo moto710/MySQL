@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Layout with RWD</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .row::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+        [class*="col-"] {
+            float: left;
+            padding: 15px;
+        }
+
+        .col-1 {
+            width: 8.33%;
+        }
+
+        .col-2 {
+            width: 16.66%;
+            background-color: antiquewhite;
+        }
+
+        .col-3 {
+            width: 25%;
+        }
+
+        .col-4 {
+            width: 33.33%;
+        }
+
+        .col-5 {
+            width: 41.66%;
+        }
+
+        .col-6 {
+            width: 50%;
+        }
+
+        .col-7 {
+            width: 58.33%;
+        }
+
+        .col-8 {
+            width: 66.66%;
+        }
+
+        .col-9 {
+            width: 75%;
+        }
+
+        .col-10 {
+            width: 83.33%;
+        }
+
+        .col-11 {
+            width: 91.66%;
+        }
+
+        .col-12 {
+            width: 100%;
+            background-color: antiquewhite;
+        }
+
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 1.5em;
+        }
+
+        #menu {
+            height: 50px;
+            padding: 0;
+            margin: 0;
+            background-color: #CDCDCD;
+            border: 1px solid #CDCDCD;
+        }
+
+        #menu ul,
+        #menu li {
+            padding: 0;
+            margin: 0;
+        }
+
+        #menu li {
+            position: relative;
+            float: left;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            color: white;
+        }
+
+        #menu li a {
+            width: 100px;
+            height: 30px;
+            display: block;
+            text-decoration: none;
+            text-align: center;
+            line-height: 30px;
+            background-color: #CDCDCD;
+
+        }
+
+        #menu ul ul li a {
+            width: 200px;
+            text-align: left;
+            padding-left: 10px;
+
+        }
+
+        #menu li a:hover {
+            background-color: red;
+        }
+
+        #menu ul ul {
+            position: absolute;
+            top: 30px;
+            left: 15px;
+            visibility: hidden;
+        }
+
+        #btn {
+            float: right;
+            box-sizing: border-box;
+            background-color: aquamarine;
+            width: 75px;
+            height: 30px;
+            border-radius: 15%;
+        }
+
+        #btn:hover {
+            cursor: pointer;
+        }
+
+        #menu ul li:hover ul {
+            visibility: visible;
+        }
+
+        .row::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="menu">
+        <ul>
+            <li><a href="#">LOGO</a></li>
+            <li><a href="#">HOME</a>
+                <ul>
+                    <li><a href="#">Link 1</a></li>
+                    <li><a href="#">Link 2</a></li>
+                    <li><a href="#">Link 3</a></li>
+                </ul>
+            </li>
+            <li><a href="#">ABOUT</a></li>
+            <li><a href="#">PROJECTS</a></li>
+            <li><a href="#">CONTACT</a></li>
+        </ul>
+        <button id="btn">Login</button>
+    </div>
+    <div style="position:absolute;opacity:0.9;width:auto;left:8px;right:10px;" class="row">
+        <div id="left" class="col-2"></div>
+        <div id="content" class="col-8">
+            <div>
+                <h1>WELCOME</h1>
+                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aspernatur cumque libero quibusdam nobis,
+                    ex at exercitationem sequi qui, corrupti, id dolores. Provident aliquid facilis adipisci temporibus
+                    id nostrum. Nihil, fugit.</p>
+            </div>
+            <div>
+                <h2>Test</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo ex tempora a delectus qui quod
+                    suscipit tenetur error eum quaerat facere optio minus earum temporibus quisquam blanditiis, quis
+                    odio nostrum.</p>
+            </div>
+
+        </div>
+        <div id="right" class="col-12">
+            <button id="btn">ADS</button>
+            <button id="btn">ADS</button>
+        </div>
+    </div>
+</body>
+
+
+</html>
