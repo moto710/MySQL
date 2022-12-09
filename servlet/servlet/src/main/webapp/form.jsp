@@ -7,10 +7,18 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-  <head>
-    <title>$Title$</title>
-  </head>
-  <body>
-  $END$
-  </body>
+<head>
+    <title>Form</title>
+</head>
+<body>
+    <form action="${pageContext.request.contextPath}/hello-form" method="get">
+        <div>First Name: <label>
+            <input type="text" name="fname">
+        </label></div>
+        <div>Last Name: <label>
+            <input type="text" name="lname">
+        </label></div>
+        <div><input type="submit" value="Submit"></div>
+    </form>
+</body>
 </html>

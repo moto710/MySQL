@@ -6,16 +6,19 @@
     <title>Dictionary</title>
 </head>
 <body>
-    <form action="" method="post">
+    <form action="${pageContext.request.contextPath}/dictionary" method="post">
         <div>
-            Keyword: <input type="text" name="input">
+            Keyword: <label>
+            <input type="text" name="input">
+        </label>
         </div>
         <div>
-            Result: ${r}
+            Result: ${requestScope.kq}
         </div>
         <div>
             <button type="submit">Search</button>
         </div>
+        <p>Method: ${requestScope.method}</p>
     </form>
 </body>
 </html>
