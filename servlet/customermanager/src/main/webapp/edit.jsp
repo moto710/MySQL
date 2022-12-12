@@ -12,17 +12,20 @@
 <body>
 <div class="container">
     <h1>Edit Customer</h1>
-    <form method="post">
-        <input type="hidden" name="id" value="${requestScope.customer.getId()}">
+    <form method="post" class="d-flex flex-column mb-3 ">
+        <label for="id">ID Customer: </label>
+        <input type="text" name="id" id="id" disabled value="${requestScope.customerId.getId()}" class="form-control" >
         <label for="idName">Name: </label>
-        <input type="text" id="idName" name="name" class="form-control" value="${requestScope.customer.getName()}">
+        <input type="text" id="idName" name="name" class="form-control" value="${requestScope.customerId.getFullName()}"
+               placeholder="${requestScope.customerId.getFullName()}">
         <label for="idAddress">Address: </label>
         <input type="text" id="idAddress" name="address" class="form-control"
-               value="${requestScope.customer.getAddress()}">
+               value="${requestScope.customerId.getAddress()}">
         <label for="idCountry">Country: </label>
         <input type="text" id="idCountry" name="country" class="form-control"
-               value="${requestScope.customer.getCountry()}">
-        <button>Edit</button>
+               value="${requestScope.customerId.getCountry()}">
+        <button type="submit">Edit</button>
+        <button class="btn btn-light p-2">${requestScope.idc}</button>
     </form>
 </div>
 </body>

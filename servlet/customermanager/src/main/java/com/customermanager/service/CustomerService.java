@@ -16,6 +16,13 @@ public class CustomerService {
         customerList.add(new Customer(4L, "Thuc Nguyen", "28 NTP", "Viet Nam"));
         customerList.add(new Customer(5L, "Tan Dung", "28 NTP", "Viet Nam"));
     }
+    public void removeCustomer(Customer customer) {
+        customerList.remove(customer);
+    }
+
+    public void removeCustomer(long id) {
+        customerList.remove(findCustomerById(id));
+    }
 
     public void editCustomer(Customer customer) {
         for (Customer item : customerList) {

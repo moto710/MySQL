@@ -7,9 +7,12 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
+<c:if test="${not empty result}">
+  <h5><c:out value="${result}"></c:out></h5>
+  </c:if>
 <div class="container">
   <h1>Create customer</h1>
-  <form method="post" action="/customer-path">
+  <form method="post">
     <c:if test="${requestScope.msg != null}">
       <div class="alert alert-success">
         <h3>${requestScope.msg}</h3>

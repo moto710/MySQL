@@ -35,7 +35,7 @@
                 <td><a href="${pageContext.request.contextPath}/customer-path?action=create" target = "_blank"><i class="fa fa-add"></i></a>
                     <a href="${pageContext.request.contextPath}/customer-path?action=edit&id=${customer.getId()}" target = "_blank"><i
                             class="fa fa-edit"></i></a>
-                    <a href="/customer?action=remove" target = "_blank"><i class="fa fa-remove"></i></a>
+                    <a href="${pageContext.request.contextPath}/customer-path?action=remove&id=${customer.getId()}" target = "_blank"><i class="fa fa-remove"></i></a>
                 </td>
             </tr>
         </c:forEach>
