@@ -1,7 +1,5 @@
 package com.customermanager.service;
 
-import com.customermanager.model.Customer;
-
 import javax.activation.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;

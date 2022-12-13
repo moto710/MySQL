@@ -1,13 +1,9 @@
 package com.customermanager.controller;
 
 import com.customermanager.model.Customer;
-import com.customermanager.service.ApplicationException;
-import com.customermanager.service.CustomerDAO;
+import com.customermanager.service.CountryService;
 import com.customermanager.service.CustomerService;
 
-import javax.activation.DataSource;
-import javax.annotation.Resource;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,17 +11,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "CustomerServlet", urlPatterns = "/customer-path")
+@WebServlet(name = "CustomerServlet", urlPatterns = {"/customer-path", ""})
 public class CustomerServlet extends HttpServlet {
-    private final CustomerService customerService = new CustomerService();
-    private RequestDispatcher requestDispatcher;
+    private CustomerService customerService;
+    private CountryService countryService  = new CountryService();
 
-//    @Resource(name = "jdbc/testDB")
-//    DataSource ds;
 
     @Override
     public void init() throws ServletException {
-//        customerService = new CustomerService();
+        customerService = new CustomerService();
+//        countryService = new CountryService();
     }
 
     @Override
@@ -35,20 +30,18 @@ public class CustomerServlet extends HttpServlet {
             action = "";
         }
         switch (action) {
-            case "create":
+            case "create": {
                 addCustomer(req, resp);
                 break;
+            }
             case "edit":
                 editCustomer(req, resp);
                 break;
-            case "remove":
-                break;
             default:
-                showAllCustomers(req, resp);
                 break;
         }
 
-        req.setAttribute("customerList", customerService.showAllCustomers());
+        req.setAttribute("customerList", customerService.getAll());
         req.getRequestDispatcher("customer.jsp").forward(req, resp);
     }
 
@@ -60,43 +53,54 @@ public class CustomerServlet extends HttpServlet {
         }
         switch (action) {
             case "create":
-                addCustomer(req, resp);
+                showFormCreateCustomer(req, resp);
                 break;
             case "edit":
-                editCustomer(req, resp);
+                showEditCustomer(req, resp);
                 break;
-            case "remove":
-                removeCustomer(req, resp);
+            case "delete":
+                showDeleteCustomer(req, resp);
                 break;
             default:
                 showAllCustomers(req, resp);
-                break;
         }
 
-        req.setAttribute("customerList", customerService.showAllCustomers());
+        req.setAttribute("customerList", customerService.getAll());
         req.getRequestDispatcher("customer.jsp").forward(req, resp);
     }
 
-    private void removeCustomer(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        long id = Long.parseLong(req.getParameter("id"));
-        customerService.removeCustomer(id);
+    private void showDeleteCustomer(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int id = Integer.parseInt(req.getParameter("id"));
+        customerService.delete(id);
 
-        req.getRequestDispatcher("remove.jsp").forward(req, resp);
+        req.setAttribute("customers", customerService.getAll());
+        req.getRequestDispatcher("/customer.jsp").forward(req, resp);
+    }
+
+    private void showEditCustomer(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int id = Integer.parseInt(req.getParameter("id"));
+        Customer customer = customerService.findById(id);
+        req.setAttribute("customer", customer);
+        req.getRequestDispatcher("edit.jsp").forward(req, resp);
+    }
+
+    private void showFormCreateCustomer(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getRequestDispatcher("create.jsp").forward(req,resp);
     }
 
     private void editCustomer(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        long id = Long.parseLong(req.getParameter("id"));
-        Customer customerId = customerService.findCustomerById(id);
+        int id = Integer.parseInt(req.getParameter("id"));
+        Customer customerId = customerService.findById(id);
 
         String name = req.getParameter("name");
         String address = req.getParameter("address");
-        String country = req.getParameter("country");
+        int idCountry = Integer.parseInt(req.getParameter("idCountry"));
 
 
         customerId.setFullName(name);
         customerId.setAddress(address);
-        customerId.setCountry(country);
-        customerService.editCustomer(customerId);
+        customerId.setIdCountry(idCountry);
+        customerService.update(customerId);
 
         req.setAttribute("idc", id);
         req.setAttribute("customerId", customerId);
@@ -106,37 +110,24 @@ public class CustomerServlet extends HttpServlet {
     private void addCustomer(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String name = req.getParameter("name");
         String address = req.getParameter("address");
-        String country = req.getParameter("country");
-        long id = customerService.showAllCustomers().size() + 1;
+        int country = Integer.parseInt(req.getParameter("country"));
+        int id = customerService.getAll().size() + 1;
 
         Customer customer = new Customer(id, name, address, country);
 
-//        CustomerDAO customerDAO = new CustomerDAO(ds);
-//        int rows;
-//        int success = 0;
-//        try {
-//            rows = customerDAO.addCustomer(customer);
-//            if (rows > 0) {
-//                success = 1;
-//            }
-//        } catch (ApplicationException a) {
-//            req.setAttribute("error", a.getMessage());
-//        }
-//        resp.sendRedirect("displayCustomer.do?s=" + success);
-
-        customerService.addCustomer(customer);
+        customerService.add(customer);
 
         String method = req.getMethod();
 
         req.setAttribute("msg", "Add new customer success!");
         req.setAttribute("method", method);
 
-        requestDispatcher = req.getRequestDispatcher("create.jsp");
-        requestDispatcher.forward(req, resp);
+        req.getRequestDispatcher("create.jsp").forward(req, resp);
     }
 
     public void showAllCustomers(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("customerList", customerService.showAllCustomers());
+        req.setAttribute("countryList", countryService.getAll());
+        req.setAttribute("customerList", customerService.getAll());
         req.getRequestDispatcher("customer.jsp").forward(req, resp);
     }
 }

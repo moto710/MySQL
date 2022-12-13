@@ -1,25 +1,25 @@
 package com.customermanager.model;
 
 public class Customer {
-    private long id;
-    private String fullName, address, country;
+    private int id, idCountry;
+    private String fullName, address;
 
     public Customer() {
 
     }
 
-    public Customer(long id, String fullName, String address, String country) {
+    public Customer(int id, String fullName, String address, int idCountry) {
         this.id = id;
         this.fullName = fullName;
         this.address = address;
-        this.country = country;
+        this.idCountry = idCountry;
     }
 
     public long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -39,16 +39,16 @@ public class Customer {
         this.address = address;
     }
 
-    public String getCountry() {
-        return country;
+    public int getIdCountry() {
+        return idCountry;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
+    public void setIdCountry(int idCountry) {
+        this.idCountry = idCountry;
     }
 
     @Override
     public String toString() {
-        return String.format("%s,%s,%s,%s", id, fullName, address, country);
+        return String.format("%s,%s,%s,%s", id, fullName, address, idCountry);
     }
 }
