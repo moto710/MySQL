@@ -16,18 +16,16 @@
   <form method="post">
     <table border="1" cellpadding="5">
       <caption>
-        <h2>
-          Edit User
-        </h2>
+        <h2>Edit User</h2>
       </caption>
-      <c:if test="${user != null}">
-        <input type="hidden" name="id" value="<c:out value='${user.id}' />"/>
+      <c:if test="${requestScope.user != null}">
+        <input type="hidden" name="id" value="<c:out value='${requestScope.user.getId()}' />"/>
       </c:if>
       <tr>
         <th>User Name:</th>
         <td>
           <input type="text" name="name" size="45"
-                 value="<c:out value='${user.name}' />"
+                 value="<c:out value='${requestScope.user.getName()}' />"
           />
         </td>
       </tr>
@@ -35,15 +33,15 @@
         <th>User Email:</th>
         <td>
           <input type="text" name="email" size="45"
-                 value="<c:out value='${user.email}' />"
+                 value="<c:out value='${requestScope.user.getEmail()}' />"
           />
         </td>
       </tr>
       <tr>
         <th>Country:</th>
         <td>
-          <input type="text" name="country" size="15"
-                 value="<c:out value='${user.country}' />"
+          <input type="text" name="idCountry" size="15"
+                 value="<c:out value='${requestScope.user.getIdCountry()}' />"
           />
         </td>
       </tr>

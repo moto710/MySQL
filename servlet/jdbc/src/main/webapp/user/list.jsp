@@ -22,12 +22,17 @@
             <th>Country</th>
             <th>Actions</th>
         </tr>
-        <c:forEach var="user" items="${listUser}">
+        <c:forEach var="user" items="${requestScope.userList}">
             <tr>
-                <td><c:out value="${user.id}"/></td>
-                <td><c:out value="${user.name}"/></td>
-                <td><c:out value="${user.email}"/></td>
-                <td><c:out value="${user.country}"/></td>
+                <td>${user.getId()}</td>
+                <td>${user.getName()}</td>
+                <td>${user.getEmail()}</td>
+                <c:forEach items="${requestScope.countryList}" var="country">
+                    <c:if test="${user.getIdCountry() == country.getId()}">
+                        <td>${country.getName()}</td>
+                    </c:if>
+                </c:forEach>
+<%--                <td><c:out value="${user.idCountry}"/></td>--%>
                 <td>
                     <a href="${pageContext.request.contextPath}/users?action=edit&id=${user.id}">Edit</a>
                     <a href="${pageContext.request.contextPath}/users?action=delete&id=${user.id}">Delete</a>

@@ -4,13 +4,13 @@ public class User {
     protected int id;
     protected String name;
     protected String email;
-    protected String country;
+    protected int idCountry;
 
-    public User(int id, String name, String email, String country) {
+    public User(int id, String name, String email, int idCountry) {
         this.id = id;
         this.name = name;
         this.email = email;
-        this.country = country;
+        this.idCountry = idCountry;
     }
 
     public User() {
@@ -40,11 +40,11 @@ public class User {
         this.email = email;
     }
 
-    public String getCountry() {
-        return country;
+    public int getIdCountry() {
+        return idCountry;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
+    public void setIdCountry(int idCountry) {
+        this.idCountry = idCountry;
     }
 }
