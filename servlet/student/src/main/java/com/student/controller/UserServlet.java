@@ -64,12 +64,12 @@ public class UserServlet extends HttpServlet {
                 case "create":
                     showNewForm(request, response);
                     break;
-//                case "edit":
-//                    showEditForm(request, response);
-//                    break;
-//                case "delete":
-//                    deleteUser(request, response);
-//                    break;
+                case "edit":
+                    showEditForm(request, response);
+                    break;
+                case "delete":
+                    deleteUser(request, response);
+                    break;
                 default:
                     listUser(request, response);
                     break;
@@ -81,44 +81,38 @@ public class UserServlet extends HttpServlet {
     }
 
 
-//
-//    private void showEditForm(HttpServletRequest request, HttpServletResponse response)
-//            throws SQLException, ServletException, IOException {
-//        int id = Integer.parseInt(request.getParameter("id"));
-//        User existingUser = userDAO.select(id);
-//        RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/edit.jsp");
-//        request.setAttribute("user", existingUser);
-//        dispatcher.forward(request, response);
-//
-//    }
+    private void deleteUser(HttpServletRequest request, HttpServletResponse response)
+            throws SQLException, IOException, ServletException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        userDAO.delete(id);
+        request.setAttribute("countryList", countryList);
+        request.setAttribute("userList", userList);
+        request.getRequestDispatcher("WEB-INF/list.jsp").forward(request, response);
+    }
+
+    private void showEditForm(HttpServletRequest request, HttpServletResponse response)
+            throws SQLException, ServletException, IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        User needEditUser = userDAO.select(id);
+        request.setAttribute("countryList", countryList);
+        request.setAttribute("needEditUser", needEditUser);
+        request.getRequestDispatcher("WEB-INF/edit.jsp").forward(request, response);
 
 
-//
-//    private void deleteUser(HttpServletRequest request, HttpServletResponse response)
-//            throws SQLException, IOException, ServletException {
-//        int id = Integer.parseInt(request.getParameter("id"));
-//        userDAO.delete(id);
-//
-//        List<User> listUser = userDAO.selectAll();
-//        request.setAttribute("listUser", listUser);
-//            RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/list.jsp");
-//        dispatcher.forward(request, response);
-//    }
-//    private boolean validateFullName() {
-//
-//    }
+    }
 
     private void updateUser(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException {
+        Set<String> errors = new HashSet<>();
         int id = Integer.parseInt(request.getParameter("id"));
         String name = request.getParameter("name");
         String email = request.getParameter("email");
         int idCountry = Integer.parseInt(request.getParameter("country"));
 
-        User book = new User(id, name, email, idCountry);
-        userDAO.update(book);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/edit.jsp");
-        dispatcher.forward(request, response);
+        User edited = new User(id, name, email, idCountry);
+        validateUser(errors, edited, request);
+        userDAO.update(edited);
+        request.getRequestDispatcher("WEB-INF/edit.jsp").forward(request, response);
     }
 
     private void listUser(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
@@ -129,26 +123,45 @@ public class UserServlet extends HttpServlet {
 
     private void insertUser(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException,
             ServletException {
-        int idCountry = -1;
-        Set<String> errors = new HashSet<>();
 
+        Set<String> errors = new HashSet<>();
         String name = request.getParameter("name");
-        if (name.equals("")) {
+        String email = request.getParameter("email");
+        int idCountry = Integer.parseInt(request.getParameter("country"));
+        User newUser = new User(name, email, idCountry);
+
+        validateUser(errors, newUser, request);
+
+        if (errors.isEmpty()) {
+            request.setAttribute("msg", "Add new user success!");
+            userDAO.insert(newUser);
+        } else {
+            request.setAttribute("errors", errors);
+            request.setAttribute("newUser", newUser);
+        }
+        request.setAttribute("countryList", countryList);
+        request.getRequestDispatcher("WEB-INF/create.jsp").forward(request, response);
+    }
+
+    public User validateUser(Set<String> errors, User user, HttpServletRequest request) {
+
+
+        if (user.getName().equals("")) {
             errors.add("Please fill your name! Upper case first letter");
-        } else if (!ValidateUtils.isFullNameValid(name)) {
+        } else if (!ValidateUtils.isFullNameValid(user.getName())) {
             errors.add("Please fill your name with upper case first letter!");
         }
 
-        String email = request.getParameter("email");
-        if (email.equals("")) {
+
+        if (user.getEmail().equals("")) {
             errors.add("Please fill your email! \nEx: abc@xyz.com");
-        } else if (!ValidateUtils.isEmailValid(email)) {
+        } else if (!ValidateUtils.isEmailValid(user.getEmail())) {
             errors.add("Please fill your email! \nEx: abc@xyz.com");
         }
 
         try {
-            idCountry = Integer.parseInt(request.getParameter("country"));
-            if (idCountry == -1) {
+
+            if (user.getIdCountry() == -1) {
                 throw new CountryInvalidException("This country is not exist!");
             }
         } catch (NumberFormatException n) {
@@ -157,17 +170,7 @@ public class UserServlet extends HttpServlet {
             errors.add(c.getMessage());
         }
 
-        User newUser = new User(name, email, idCountry);
-        if (errors.isEmpty()) {
-            request.setAttribute("msg", "Add new user success!");
-            userDAO.insert(newUser);
-        } else {
-            request.setAttribute("errors", errors);
-            request.setAttribute("newUser", newUser);
-
-        }
-        request.setAttribute("countryList", countryList);
-        request.getRequestDispatcher("WEB-INF/create.jsp").forward(request, response);
+        return user;
     }
 
     private void showNewForm(HttpServletRequest request, HttpServletResponse response) throws

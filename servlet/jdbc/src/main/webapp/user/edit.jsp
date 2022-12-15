@@ -24,25 +24,31 @@
       <tr>
         <th>User Name:</th>
         <td>
-          <input type="text" name="name" size="45"
-                 value="<c:out value='${requestScope.user.getName()}' />"
-          />
+          <label>
+            <input type="text" name="name" size="45"
+                   value="<c:out value='${requestScope.user.getName()}' />"
+            />
+          </label>
         </td>
       </tr>
       <tr>
         <th>User Email:</th>
         <td>
-          <input type="text" name="email" size="45"
-                 value="<c:out value='${requestScope.user.getEmail()}' />"
-          />
+          <label>
+            <input type="text" name="email" size="45"
+                   value="<c:out value='${requestScope.user.getEmail()}' />"
+            />
+          </label>
         </td>
       </tr>
       <tr>
         <th>Country:</th>
         <td>
-          <input type="text" name="idCountry" size="15"
-                 value="<c:out value='${requestScope.user.getIdCountry()}' />"
-          />
+          <label>
+            <input type="text" name="idCountry" size="15"
+                   value="<c:out value='${requestScope.user.getIdCountry()}' />"
+            />
+          </label>
         </td>
       </tr>
       <tr>

@@ -1,6 +1,7 @@
 package com.coffeeshop.model;
 
 public class User {
+    private int id;
     private String userName;
     private String passWord;
     private String fullName;
@@ -12,13 +13,22 @@ public class User {
 
     }
 
-    public User(String userName, String passWord, String fullName, String phone, String email, String address) {
+    public User(int id, String userName, String passWord, String fullName, String phone, String email, String address) {
+        this.id = id;
         this.userName = userName;
         this.passWord = passWord;
         this.fullName = fullName;
         this.phone = phone;
         this.email = email;
         this.address = address;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getUserName() {

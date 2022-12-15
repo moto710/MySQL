@@ -1,10 +1,7 @@
 package com.student.dao;
 
-import com.student.model.Country;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class DAO {
     private String jdbcURL = "jdbc:mysql://localhost:3306/users_manager?useSSL=false";

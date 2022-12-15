@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="a2c7a77d-5126-490d-9c89-6ef888c19bec" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/jdbc/src/main/java/com/jdbc/model/Country.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Discount/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Discount/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TestJSTL/src/main/java/com/testjstl/DBUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/TestJSTL/src/main/java/com/testjstl/DBUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TestJSTL/src/main/java/com/testjstl/Dept.java" beforeDir="false" afterPath="$PROJECT_DIR$/TestJSTL/src/main/java/com/testjstl/Dept.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TestJSTL/src/main/java/com/testjstl/Emp.java" beforeDir="false" afterPath="$PROJECT_DIR$/TestJSTL/src/main/java/com/testjstl/Emp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TestJSTL/src/main/webapp/WEB-INF/fmt_formatDate.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/TestJSTL/src/main/webapp/WEB-INF/fmt_formatDate.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/currency-converter-jsp/src/main/webapp/converter.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/currency-converter-jsp/src/main/webapp/converter.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/currency-converter-jsp/src/main/webapp/test.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/currency-converter-jsp/src/main/webapp/test.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jdbc/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/jdbc/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jdbc/src/main/java/com/jdbc/controller/UserServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/jdbc/src/main/java/com/jdbc/controller/UserServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/learnServlet/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/learnServlet/.idea/gradle.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="2InBYkGsJvzsQz64D5g3yukkB2F" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "D:/md3/servlet/customermanager"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a2c7a77d-5126-490d-9c89-6ef888c19bec" name="Changes" comment="" />
+      <created>1670807516985</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1670807516985</updated>
+      <workItem from="1670807518459" duration="68000" />
+      <workItem from="1670913961666" duration="20000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

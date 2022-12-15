@@ -51,7 +51,7 @@
 
 <div class="container d-flex flex-row-reverse">
     <a href="${pageContext.request.contextPath}/users?action=create">
-        <button type="button" class="btn btn-primary btn-lg">Create New User</button>
+        <button type="button" class="btn btn-primary btn-lg mb-3">Create New User</button>
     </a>
 </div>
 </body>

@@ -11,9 +11,9 @@ import java.util.List;
 
 public class UserDAO extends RootDAO implements IDAO<User> {
     private static final String SELECT_ALL_USERS = "select * from users;";
-    private static final String INSERT_USERS = "INSERT INTO `users` (`userName`, `passWord`, `fullName`, `phone`, `email`, `address`) VALUES (?, ?, ?, ?, ?, ?);";
-    private static final String FIND_BY_USER_NAME = "select * from users where userName = ?;";
-    private static final String DELETE_USERS_BY_USER_NAME = "DELETE FROM users WHERE userName = ?;";
+    private static final String INSERT_USERS = "INSERT INTO `users` (`id`, `userName`, `passWord`, `fullName`, `phone`, `email`, `address`) VALUES (?, ?, ?, ?, ?, ?, ?);";
+    private static final String FIND_BY_ID = "select * from users where ID = ?;";
+    private static final String DELETE_USERS_BY_ID = "DELETE FROM users WHERE ID = ?;";
     private static final String UPDATE_USERS = "UPDATE users SET passWord = ?, passWord = ?, fullName = ?, phone = ?, email = ?, address = ? WHERE userName = ?;";
 
     @Override
@@ -22,43 +22,44 @@ public class UserDAO extends RootDAO implements IDAO<User> {
         try (
                 Connection connection = getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USERS)) {
-            preparedStatement.setString(1, user.getUserName());
-            preparedStatement.setString(2, user.getPassWord());
-            preparedStatement.setString(3, user.getFullName());
-            preparedStatement.setString(4, user.getPhone());
-            preparedStatement.setString(5, user.getEmail());
-            preparedStatement.setString(6, user.getAddress());
+            preparedStatement.setInt(1, user.getId());
+            preparedStatement.setString(2, user.getUserName());
+            preparedStatement.setString(3, user.getPassWord());
+            preparedStatement.setString(4, user.getFullName());
+            preparedStatement.setString(5, user.getPhone());
+            preparedStatement.setString(6, user.getEmail());
+            preparedStatement.setString(7, user.getAddress());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             printSQLException(e);
         }
     }
-
-    public User select(String userName) {
+    @Override
+    public User select(int id) {
         User user = null;
         // Step 1: Establishing a Connection
         try (Connection connection = getConnection();
              // Step 2:Create a statement using connection object
-             PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_USER_NAME)) {
-            preparedStatement.setString(1, userName);
+             PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_ID)) {
+            preparedStatement.setInt(1, id);
             // Step 3: Execute the query or update query
             ResultSet rs = preparedStatement.executeQuery();
 
             // Step 4: Process the ResultSet object.
             while (rs.next()) {
+                String userName = rs.getString("userName");
                 String passWord = rs.getString("passWord");
                 String fullName = rs.getString("fullName");
                 String phone = rs.getString("phone");
                 String email = rs.getString("email");
                 String address = rs.getString("address");
-                user = new User(userName, passWord, fullName, phone, email, address);
+                user = new User(id, userName, passWord, fullName, phone, email, address);
             }
         } catch (SQLException e) {
             printSQLException(e);
         }
         return user;
     }
-
     @Override
     public List<User> selectAll() {
         List<User> userList = new ArrayList<>();
@@ -72,6 +73,7 @@ public class UserDAO extends RootDAO implements IDAO<User> {
 
             // Step 4: Process the ResultSet object.
             while (rs.next()) {
+                int id = rs.getInt("id");
                 String userName = rs.getString("userName");
                 String passWord = rs.getString("passWord");
                 String fullName = rs.getString("fullName");
@@ -79,19 +81,19 @@ public class UserDAO extends RootDAO implements IDAO<User> {
                 String email = rs.getString("email");
                 String address = rs.getString("address");
 
-                userList.add(new User(userName, passWord, fullName, phone, email, address));
+                userList.add(new User(id, userName, passWord, fullName, phone, email, address));
             }
         } catch (SQLException e) {
             printSQLException(e);
         }
         return userList;
     }
-
-    public boolean delete(String userName) throws SQLException {
+    @Override
+    public boolean delete(int id) throws SQLException {
         boolean rowDeleted;
         try (Connection connection = getConnection();
-             PreparedStatement statement = connection.prepareStatement(DELETE_USERS_BY_USER_NAME)) {
-            statement.setString(1, userName);
+             PreparedStatement statement = connection.prepareStatement(DELETE_USERS_BY_ID)) {
+            statement.setInt(1, id);
             rowDeleted = statement.executeUpdate() > 0;
         }
         return rowDeleted;

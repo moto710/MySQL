@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class RootDAO {
-    protected String jdbcURL = "jdbc:mysql://localhost:3306/coffeeshop?useSSL=false";
+    protected String jdbcURL = "jdbc:mysql://localhost:3306/coffee_shop?useSSL=false";
     protected String jdbcUsername = "root";
     protected String jdbcPassword = "123456789";
 

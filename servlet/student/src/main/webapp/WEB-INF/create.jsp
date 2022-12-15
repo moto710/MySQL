@@ -57,7 +57,7 @@
         </div>
         <div class="form-group">
             <label for="country">Country:</label>
-            <div class="custom-select" style="width:200px;">
+            <div class="custom-select">
                 <select id="country" name="country">
                     <option disabled selected>Select country</option>
                     <c:forEach items="${requestScope.countryList}" var="country">
@@ -66,7 +66,7 @@
                 </select>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary mb-3">Submit</button>
     </form>
 </div>
 <script src="dropdown.js"></script>
