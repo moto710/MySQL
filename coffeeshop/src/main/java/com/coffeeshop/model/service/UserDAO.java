@@ -10,12 +10,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAO extends RootDAO implements IDAO<User> {
-    private static final String SELECT_ALL_USERS = "select * from users;";
+    private static final String SELECT_ALL_USERS = "SELECT * FROM `users`;";
     private static final String INSERT_USERS = "INSERT INTO `users` (`id`, `userName`, `passWord`, `fullName`, `phone`, `email`, `address`) VALUES (?, ?, ?, ?, ?, ?, ?);";
-    private static final String FIND_BY_ID = "select * from users where ID = ?;";
+    private static final String FIND_BY_ID = "SELECT * FROM users WHERE id = ?;";
     private static final String DELETE_USERS_BY_ID = "DELETE FROM users WHERE ID = ?;";
     private static final String UPDATE_USERS = "UPDATE users SET passWord = ?, passWord = ?, fullName = ?, phone = ?, email = ?, address = ? WHERE userName = ?;";
-
+    private static final String FIND_MAX_ID = "SELECT MAX(`id`) AS id FROM users;";
+    @Override
+    public int findBiggestId() {
+        int max = -1;
+        try (
+                Connection connection = getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(FIND_MAX_ID);
+                ) {
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) {
+                max = rs.getInt("id");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return max;
+    }
     @Override
     public void insert(User user) {
         // try-with-resource statement will auto close the connection.

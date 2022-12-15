@@ -11,4 +11,5 @@ public interface IDAO<T> {
     List<T> selectAll();
     boolean delete(int id) throws SQLException;
     boolean update(T t);
+    int findBiggestId();
 }
