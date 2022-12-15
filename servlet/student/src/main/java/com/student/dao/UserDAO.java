@@ -6,10 +6,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDAO implements IDAO<User>{
-    private String jdbcURL = "jdbc:mysql://localhost:3306/users_manager?useSSL=false";
-    private String jdbcUsername = "root";
-    private String jdbcPassword = "123456789";
+public class UserDAO extends DAO implements IDAO<User> {
 
     private static final String INSERT_USERS_SQL = "INSERT INTO users (name, email, country) VALUES (?, ?, ?);";
     private static final String SELECT_USER_BY_ID = "select id,name,email,country from users where id =?";
@@ -20,20 +17,6 @@ public class UserDAO implements IDAO<User>{
     public UserDAO() {
     }
 
-    protected Connection getConnection() {
-        Connection connection = null;
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return connection;
-    }
 
     @Override
     public void insert(User user) {
@@ -96,7 +79,7 @@ public class UserDAO implements IDAO<User>{
                 int id = rs.getInt("id");
                 String name = rs.getString("name");
                 String email = rs.getString("email");
-                int idCountry = Integer.parseInt(rs.getString("country"));
+                int idCountry = rs.getInt("country");
                 users.add(new User(id, name, email, idCountry));
             }
         } catch (SQLException e) {
@@ -131,19 +114,4 @@ public class UserDAO implements IDAO<User>{
         return rowUpdated;
     }
 
-    private void printSQLException(SQLException ex) {
-        for (Throwable e : ex) {
-            if (e instanceof SQLException) {
-                e.printStackTrace(System.err);
-                System.err.println("SQLState: " + ((SQLException) e).getSQLState());
-                System.err.println("Error Code: " + ((SQLException) e).getErrorCode());
-                System.err.println("Message: " + e.getMessage());
-                Throwable t = ex.getCause();
-                while (t != null) {
-                    System.out.println("Cause: " + t);
-                    t = t.getCause();
-                }
-            }
-        }
-    }
 }

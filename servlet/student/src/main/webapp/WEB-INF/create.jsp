@@ -11,6 +11,7 @@
           integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.15/dist/sweetalert2.all.min.js"></script>
+    <link rel="stylesheet" href="dropdown.css">
 </head>
 <body>
 <div class="container">
@@ -56,19 +57,18 @@
         </div>
         <div class="form-group">
             <label for="country">Country:</label>
-            <div class="dropdown" id="country">
-                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">Choose country
-                </button>
-                <div class="dropdown-menu" name="country" >
+            <div class="custom-select" style="width:200px;">
+                <select id="country" name="country">
+                    <option disabled selected>Select country</option>
                     <c:forEach items="${requestScope.countryList}" var="country">
-                        <p class="dropdown-item" value="${country.getName()}">${country.getName()}</p>
+                        <option value="${country.getId()}">${country.getName()}</option>
                     </c:forEach>
-                </div>
+                </select>
             </div>
-            <%--            <input type="text" clXnvalid-feedback">Please fill out this field.</div>--%>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
+<script src="dropdown.js"></script>
 </body>
 </html>
