@@ -56,13 +56,12 @@
                         </button>
                         </div>
                         <div style="white-space: pre;">
-                            <span class="psw"> Or <a href="${pageContext.request.contextPath}/home?action=signUp">create new account</a></span><span class="psw">Forgot <a href="${pageContext.request.contextPath}/home?action=forgotPW">password?</a></span>
+                            <span class="psw open-button"> Or <a href="${pageContext.request.contextPath}/home?action=signUp">create new account</a></span><span class="psw">Forgot <a href="${pageContext.request.contextPath}/home?action=forgotPW">password?</a></span>
                         </div>
 
                     </div>
                 </form>
             </div>
-
         </div>
     </nav>
 </div>

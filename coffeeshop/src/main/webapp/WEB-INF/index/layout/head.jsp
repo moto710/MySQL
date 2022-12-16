@@ -3,7 +3,7 @@
 <meta content="Free Website Template" name="description">
 
 <!-- Favicon -->
-<link href="${pageContext.request.contextPath}/coffee/img/favicon.ico" rel="icon">
+<link href="${pageContext.request.contextPath}/coffee/img/about.png" rel="icon">
 
 <!-- Google Font -->
 <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -24,3 +24,6 @@
 
 <!-- js login form -->
 <script src="${pageContext.request.contextPath}/coffee/js/loginForm.js"></script>
+
+<!-- js sweet alert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.15/dist/sweetalert2.all.min.js"></script>

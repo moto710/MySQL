@@ -13,6 +13,7 @@ import javax.servlet.annotation.*;
 @WebServlet({"/home", ""})
 public class UserServlet extends HttpServlet {
     private final UserDAO userDAO = new UserDAO();
+    private List<User> userList;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
@@ -57,21 +58,16 @@ public class UserServlet extends HttpServlet {
         String userName = req.getParameter("userName");
         String email = req.getParameter("email");
         String phone = req.getParameter("phone");
-        String msg = "Can't find your account, try again!";
-        List<User> userList = userDAO.selectAll();
-        for (User user : userList) {
-            if (user.getUserName().equals(userName) && user.getEmail().equals(email) && user.getPhone().equals(phone)) {
-                String pw = user.getPassWord();
-                req.setAttribute("pw", pw);
-                break;
-            } else {
-                req.setAttribute("msg", msg);
-            }
-        }
-        req.getRequestDispatcher("WEB-INF/index/mainJsp/forgotPW.jsp").forward(req, resp);
+        String pw = userDAO.findPW(userName, email, phone);
+        String method = req.getMethod();
+        req.setAttribute("method", method);
+        req.setAttribute("pw", pw);
+        req.getRequestDispatcher("/WEB-INF/index/mainJsp/forgotPW.jsp").forward(req, resp);
     }
 
     private void showForgotPWView(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String method = req.getMethod();
+        req.setAttribute("method", method);
         req.getRequestDispatcher("WEB-INF/index/mainJsp/forgotPW.jsp").forward(req, resp);
     }
 
@@ -89,11 +85,11 @@ public class UserServlet extends HttpServlet {
 
         User user = new User(id, userName, passWord, fullName, phone, email, address);
         userDAO.insert(user);
-        req.getRequestDispatcher("WEB-INF/signUpForm.jsp").forward(req, resp);
+        req.getRequestDispatcher("WEB-INF/index/mainJsp/signUpForm.jsp").forward(req, resp);
     }
 
     private void showSignUpView(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("WEB-INF/signUpForm.jsp").forward(req, resp);
+        req.getRequestDispatcher("WEB-INF/index/mainJsp/signUpForm.jsp").forward(req, resp);
     }
 
 
