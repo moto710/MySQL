@@ -1,9 +1,9 @@
+<%@ page import="com.coffeeshop.model.User" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-  <title>MT Coffee Shop</title>
   <jsp:include page="/WEB-INF/index/layout/head.jsp"></jsp:include>
 </head>
 <body>
@@ -15,6 +15,22 @@
 <jsp:include page="/WEB-INF/index/layout/carousel.jsp"></jsp:include>
 <!-- Carousel End -->
 
+
+<c:if test="${requestScope.user != null}">
+  <script>
+    let name = '<%= ((User) request.getAttribute("user")).getFullName() %>';
+    Swal.fire({
+      title: 'Welcome ' + name,
+      text: 'to coffee world',
+      showClass: {
+        popup: 'animate__animated animate__fadeInDown'
+      },
+      hideClass: {
+        popup: 'animate__animated animate__fadeOutUp'
+      }
+    })
+  </script>
+</c:if>
 <div class="container">
   <h2>Sign Up</h2>
   <form class="was-validated" method="post">

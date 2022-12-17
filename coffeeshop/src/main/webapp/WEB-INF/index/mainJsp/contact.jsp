@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-  <title>KOPPEE - Coffee Shop HTML Template</title>
+  <title>MT Coffee Shop</title>
   <jsp:include page="/WEB-INF/index/layout/head.jsp"></jsp:include>
 </head>
 <body>

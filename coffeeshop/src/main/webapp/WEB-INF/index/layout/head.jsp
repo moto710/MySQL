@@ -1,6 +1,7 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="Free Website Template" name="keywords">
 <meta content="Free Website Template" name="description">
+<title>MT Coffee Shop</title>
 
 <!-- Favicon -->
 <link href="${pageContext.request.contextPath}/coffee/img/about.png" rel="icon">

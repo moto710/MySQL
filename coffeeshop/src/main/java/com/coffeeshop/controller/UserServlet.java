@@ -1,6 +1,8 @@
 package com.coffeeshop.controller;
 
+import com.coffeeshop.model.Product;
 import com.coffeeshop.model.User;
+import com.coffeeshop.model.service.ProductDAO;
 import com.coffeeshop.model.service.UserDAO;
 
 import java.io.*;
@@ -13,7 +15,9 @@ import javax.servlet.annotation.*;
 @WebServlet({"/home", ""})
 public class UserServlet extends HttpServlet {
     private final UserDAO userDAO = new UserDAO();
+    private final ProductDAO productDAO = new ProductDAO();
     private List<User> userList;
+    private List<Product> productList;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
@@ -28,11 +32,18 @@ public class UserServlet extends HttpServlet {
             case "forgotPW":
                 showForgotPWView(req, resp);
                 break;
+            case "dashboard":
+                showDashboardView(req, resp);
+            break;
+            case "manager":
+                showUserManagerView(req, resp);
+                break;
             default:
                 showLoginView(req, resp);
                 break;
         }
     }
+
 
 
     @Override
@@ -48,10 +59,27 @@ public class UserServlet extends HttpServlet {
             case "forgotPW":
                 forgotPW(req, resp);
                 break;
+            case "manager":
+                userManager(req, resp);
+                break;
             default:
                 showLoginView(req, resp);
                 break;
         }
+    }
+
+    private void userManager(HttpServletRequest req, HttpServletResponse resp) {
+    }
+
+    private void showUserManagerView(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        userList = userDAO.selectAll();
+        req.setAttribute("userList", userList);
+        req.getRequestDispatcher("WEB-INF/index/mainJsp/userManager.jsp").forward(req, resp);
+    }
+    private void showDashboardView(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        productList = productDAO.selectAll();
+        req.setAttribute("productList", productList);
+        req.getRequestDispatcher("WEB-INF/index/mainJsp/dashboard.jsp").forward(req, resp);
     }
 
     private void forgotPW(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -85,6 +113,7 @@ public class UserServlet extends HttpServlet {
 
         User user = new User(id, userName, passWord, fullName, phone, email, address);
         userDAO.insert(user);
+        req.setAttribute("user", user);
         req.getRequestDispatcher("WEB-INF/index/mainJsp/signUpForm.jsp").forward(req, resp);
     }
 
@@ -94,8 +123,19 @@ public class UserServlet extends HttpServlet {
 
 
     private void login(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        userList = userDAO.selectAll();
         String userName = req.getParameter("userName");
         String passWord = req.getParameter("passWord");
+        User loginUser = null;
+        for (User user : userList) {
+            if (user.getUserName().equals(userName) && user.getPassWord().equals(passWord)) {
+                loginUser = user;
+                req.setAttribute("loginUser", loginUser);
+                req.getRequestDispatcher("WEB-INF/index/mainJsp/dashboard.jsp").forward(req, resp);
+                break;
+            }
+        }
+        req.setAttribute("loginUser", loginUser);
         req.getRequestDispatcher("WEB-INF/index/mainJsp/index.jsp").forward(req, resp);
     }
 
