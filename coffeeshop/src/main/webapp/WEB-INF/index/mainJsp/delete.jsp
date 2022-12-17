@@ -24,9 +24,6 @@
     <form method="post">
         <div class="d-flex justify-content-between">
             <h2 class="col-4">Delete User</h2>
-            <button type="submit" class="btn btn-lg col-3"><a
-                    href="${pageContext.request.contextPath}/home?action=remove&id=${requestScope.user.getId()}"><i
-                    class="fa fa-trash"></i>Remove User<i class="fa fa-trash"></i></a></button>
         </div>
 
         <table class="table table-striped">
@@ -54,6 +51,8 @@
                 <td>
                     <a href="${pageContext.request.contextPath}/home?action=edit&id=${requestScope.user.getId()}"><i
                             class="fa fa-edit"></i></a>
+                    <a href="${pageContext.request.contextPath}/home?action=remove&id=${requestScope.user.getId()}"><i
+                            class="fa fa-trash"></i></a>
                 </td>
             </tr>
             </tbody>

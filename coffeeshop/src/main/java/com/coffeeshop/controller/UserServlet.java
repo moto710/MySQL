@@ -18,14 +18,12 @@ public class UserServlet extends HttpServlet {
     private final ProductDAO productDAO = new ProductDAO();
     private List<User> userList;
     private List<Product> productList;
+    private static final long serialVersionUID = 1L;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         String action = getAction(req);
         switch (action) {
-            case "login":
-                showLoginView(req, resp);
-                break;
             case "signUp":
                 showSignUpView(req, resp);
                 break;
@@ -78,17 +76,19 @@ public class UserServlet extends HttpServlet {
         }
     }
 
+
+
     private void removeUser(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int id = Integer.parseInt(req.getParameter("id"));
-        userDAO.delete(id);
-        req.getRequestDispatcher("WEB-INF/index/mainJsp/userManager.jsp").forward(req, resp);
+//        int id = Integer.parseInt(req.getParameter("id"));
+//        userList = userDAO.selectAll();
+//        userList.remove(userDAO.select(id));
+//        req.getRequestDispatcher("WEB-INF/index/mainJsp/delete.jsp").forward(req, resp);
     }
 
     private void showRemoveView(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     int id = Integer.parseInt(req.getParameter("id"));
-    User user = userDAO.select(id);
-    req.setAttribute("user", user);
-    req.getRequestDispatcher("WEB-INF/index/mainJsp/delete.jsp").forward(req, resp);
+    userDAO.delete(id);
+    req.getRequestDispatcher("WEB-INF/index/mainJsp/userManager.jsp").forward(req, resp);
     }
 
     private void editUser(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -116,9 +116,21 @@ public class UserServlet extends HttpServlet {
     }
 
     private void showUserManagerView(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        userList = userDAO.selectAll();
-        req.setAttribute("userList", userList);
-        req.getRequestDispatcher("WEB-INF/index/mainJsp/userManager.jsp").forward(req, resp);
+        int page = 1;
+        int recordsPerPage = 5;
+        if (req.getParameter("page") != null) {
+            page = Integer.parseInt(req.getParameter("page"));
+            userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage);
+            int noOfRecords = userDAO.getNoOfRecords();
+            int noOfPages = (int)Math.ceil(noOfRecords * 1.0/recordsPerPage);
+            req.setAttribute("userList", userList);
+            req.setAttribute("noOfPages", noOfPages);
+            req.setAttribute("currentPage", page);
+            req.getRequestDispatcher("WEB-INF/index/mainJsp/userManager.jsp").forward(req, resp);
+        }
+//        userList = userDAO.selectAll();
+//        req.setAttribute("userList", userList);
+//        req.getRequestDispatcher("WEB-INF/index/mainJsp/userManager.jsp").forward(req, resp);
     }
     private void showDashboardView(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         productList = productDAO.selectAll();

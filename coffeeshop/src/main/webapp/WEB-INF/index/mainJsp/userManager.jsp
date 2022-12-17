@@ -38,42 +38,67 @@
 <div class="container">
     <div class="d-flex justify-content-between">
         <h2 class="col-4">All Users</h2>
-            <button type="button" class="btn col-2"><a href="${pageContext.request.contextPath}/home?action=signUp"><i
-                    class="fa fa-plus"></i> Add User</a></button>
+        <button type="button" class="btn col-2"><a href="${pageContext.request.contextPath}/home?action=signUp"><i
+                class="fa fa-plus"></i> Add User</a></button>
     </div>
-
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>User Name</th>
-            <th>Password</th>
-            <th>Full Name</th>
-            <th>Phone Number</th>
-            <th>Email</th>
-            <th>Address</th>
-            <th>Action</th>
-        </tr>
-        </thead>
-        <tbody>
-        <c:forEach items="${requestScope.userList}" var="user">
+    <form>
+        <table class="table table-striped">
+            <thead>
             <tr>
-                <td>${user.getId()}</td>
-                <td>${user.getUserName()}</td>
-                <td>${user.getPassWord()}</td>
-                <td>${user.getFullName()}</td>
-                <td>${user.getPhone()}</td>
-                <td>${user.getEmail()}</td>
-                <td>${user.getAddress()}</td>
-                <td>
-                    <a href="${pageContext.request.contextPath}/home?action=edit&id=${user.getId()}"><i class="fa fa-edit"></i></a>
-                    <a href="${pageContext.request.contextPath}/home?action=remove&id=${user.getId()}"><i class="fa fa-trash"></i></a>
-                </td>
+                <th>ID</th>
+                <th>User Name</th>
+                <th>Password</th>
+                <th>Full Name</th>
+                <th>Phone Number</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th>Action</th>
             </tr>
-        </c:forEach>
+            </thead>
+            <tbody>
+            <c:forEach items="${requestScope.userList}" var="user">
+                <tr>
+                    <td>${user.getId()}</td>
+                    <td>${user.getUserName()}</td>
+                    <td>${user.getPassWord()}</td>
+                    <td>${user.getFullName()}</td>
+                    <td>${user.getPhone()}</td>
+                    <td>${user.getEmail()}</td>
+                    <td>${user.getAddress()}</td>
+                    <td>
+                        <a href="${pageContext.request.contextPath}/home?action=edit&id=${user.getId()}"><i
+                                class="fa fa-edit"></i></a>
+                        <a href="${pageContext.request.contextPath}/home?action=remove&id=${user.getId()}"><i
+                                class="fa fa-trash"></i></a>
+                    </td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
 
-        </tbody>
-    </table>
+        <ul class="pagination">
+            <c:if test="${requestScope.currentPage ne 1}">
+                <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/home?action=manager&page=${requestScope.currentPage - 1}">Previous</a></li>
+            </c:if>
+<c:forEach begin="1" end="${requestScope.noOfPages}" var="i">
+    <c:choose>
+        <c:when test="${requestScope.currentPage eq i}">
+            <li class="page-item"><a class="page-link" href="#">${i}</a></li>
+        </c:when>
+        <c:otherwise>
+            <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/home?action=manager&page=${i}">${i}</a></li>
+        </c:otherwise>
+    </c:choose>
+</c:forEach>
+            <c:if test="${requestScope.currentPage lt requestScope.noOfPages}">
+                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+            </c:if>
+
+
+            <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/home?action=manager&page=${requestScope.currentPage + i}">3</a></li>
+
+        </ul>
+    </form>
 </div>
 
 
@@ -83,5 +108,7 @@
 
 <!-- Back to Top -->
 <jsp:include page="/WEB-INF/index/layout/backToTop.jsp"></jsp:include>
+
+
 </body>
 </html>

@@ -1,16 +1,16 @@
 package com.coffeeshop.model.service;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class RootDAO {
     protected String jdbcURL = "jdbc:mysql://localhost:3306/coffee_shop?useSSL=false";
     protected String jdbcUsername = "root";
     protected String jdbcPassword = "123456789";
+    protected Connection connection;
+    protected PreparedStatement preparedStatement;
+    protected ResultSet rs;
 
     public Connection getConnection() {
-        Connection connection = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
