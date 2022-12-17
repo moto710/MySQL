@@ -1,3 +1,4 @@
+<%@ page import="com.coffeeshop.model.User" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -51,6 +52,7 @@
             <th>Phone Number</th>
             <th>Email</th>
             <th>Address</th>
+            <th>Action</th>
         </tr>
         </thead>
         <tbody>
@@ -63,6 +65,10 @@
                 <td>${user.getPhone()}</td>
                 <td>${user.getEmail()}</td>
                 <td>${user.getAddress()}</td>
+                <td>
+                    <a href="${pageContext.request.contextPath}/home?action=edit&id=${user.getId()}"><i class="fa fa-edit"></i></a>
+                    <a href="${pageContext.request.contextPath}/home?action=remove&id=${user.getId()}"><i class="fa fa-trash"></i></a>
+                </td>
             </tr>
         </c:forEach>
 

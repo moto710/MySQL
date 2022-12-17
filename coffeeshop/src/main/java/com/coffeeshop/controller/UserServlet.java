@@ -38,13 +38,17 @@ public class UserServlet extends HttpServlet {
             case "manager":
                 showUserManagerView(req, resp);
                 break;
+            case "edit":
+                showEditView(req, resp);
+                break;
+            case "remove":
+                showRemoveView(req, resp);
+                break;
             default:
                 showLoginView(req, resp);
                 break;
         }
     }
-
-
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -62,10 +66,50 @@ public class UserServlet extends HttpServlet {
             case "manager":
                 userManager(req, resp);
                 break;
+            case "edit":
+                editUser(req, resp);
+                break;
+            case "remove":
+                removeUser(req, resp);
+                break;
             default:
                 showLoginView(req, resp);
                 break;
         }
+    }
+
+    private void removeUser(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int id = Integer.parseInt(req.getParameter("id"));
+        userDAO.delete(id);
+        req.getRequestDispatcher("WEB-INF/index/mainJsp/userManager.jsp").forward(req, resp);
+    }
+
+    private void showRemoveView(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    int id = Integer.parseInt(req.getParameter("id"));
+    User user = userDAO.select(id);
+    req.setAttribute("user", user);
+    req.getRequestDispatcher("WEB-INF/index/mainJsp/delete.jsp").forward(req, resp);
+    }
+
+    private void editUser(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int id = Integer.parseInt(req.getParameter("id"));
+        String userName = req.getParameter("userName");
+        String passWord = req.getParameter("passWord");
+        String fullName = req.getParameter("fullName");
+        String phone = req.getParameter("phone");
+        String email = req.getParameter("email");
+        String address = req.getParameter("address");
+        userDAO.update(new User(id, userName, passWord, fullName, phone, email, address));
+        String msg = "Change your infomation success!";
+        req.setAttribute("msg", msg);
+        req.getRequestDispatcher("WEB-INF/index/mainJsp/edit.jsp").forward(req,resp);
+    }
+
+    private void showEditView(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int id = Integer.parseInt(req.getParameter("id"));
+        User user = userDAO.select(id);
+        req.setAttribute("user", user);
+        req.getRequestDispatcher("WEB-INF/index/mainJsp/edit.jsp").forward(req,resp);
     }
 
     private void userManager(HttpServletRequest req, HttpServletResponse resp) {

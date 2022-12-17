@@ -13,8 +13,8 @@ public class UserDAO extends RootDAO implements IDAO<User> {
     private static final String SELECT_ALL_USERS = "SELECT * FROM `users`;";
     private static final String INSERT_USERS = "INSERT INTO `users` (`id`, `userName`, `passWord`, `fullName`, `phone`, `email`, `address`) VALUES (?, ?, ?, ?, ?, ?, ?);";
     private static final String FIND_BY_ID = "SELECT * FROM users WHERE id = ?;";
-    private static final String DELETE_USERS_BY_ID = "DELETE FROM users WHERE ID = ?;";
-    private static final String UPDATE_USERS = "UPDATE users SET passWord = ?, passWord = ?, fullName = ?, phone = ?, email = ?, address = ? WHERE userName = ?;";
+    private static final String DELETE_USERS_BY_ID = "DELETE FROM `users` WHERE `id` = ?;";
+    private static final String UPDATE_USERS = "UPDATE users SET `userName` = ?, passWord = ?, fullName = ?, phone = ?, email = ?, address = ? WHERE `id` = ?;";
     private static final String FIND_MAX_ID = "SELECT MAX(`id`) AS id FROM users;";
 
     public String findPW(String userName, String email, String phone) {
@@ -132,7 +132,6 @@ public class UserDAO extends RootDAO implements IDAO<User> {
             printSQLException(sqlException);
         }
         return rowDeleted;
-
     }
 
     @Override
@@ -141,6 +140,8 @@ public class UserDAO extends RootDAO implements IDAO<User> {
         try {
             Connection connection = getConnection();
             PreparedStatement statement = connection.prepareStatement(UPDATE_USERS);
+            statement.setInt(7, user.getId());
+            statement.setString(1, user.getUserName());
             statement.setString(2, user.getPassWord());
             statement.setString(3, user.getFullName());
             statement.setString(4, user.getPhone());
