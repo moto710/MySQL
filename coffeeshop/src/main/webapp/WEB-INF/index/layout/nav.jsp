@@ -4,26 +4,16 @@
         <a href="${pageContext.request.contextPath}/home?action=home" class="navbar-brand px-lg-4 m-0">
             <h1 class="m-0 display-4 text-uppercase text-white">MT COFFEE SHOP</h1>
         </a>
-        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+        <%--        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">--%>
+        <%--            <span class="navbar-toggler-icon"></span>--%>
+        <%--        </button>--%>
         <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
             <form>
                 <div class="navbar-nav ml-auto p-4">
                     <a href="${pageContext.request.contextPath}/home?action=about"
                        class="nav-item nav-link active">About</a>
-                    <a href="${pageContext.request.contextPath}/home?action=dashboard" class="nav-item nav-link">Dashboard</a>
-                    <a href="${pageContext.request.contextPath}/home?action=manager" class="nav-item nav-link">User Manager</a>
-                    <a href="${pageContext.request.contextPath}/home?action=menu" class="nav-item nav-link">Menu</a>
-                    <div class="nav-item dropdown">
-                        <a href="${pageContext.request.contextPath}/home?action=page" class="nav-link dropdown-toggle"
-                           data-toggle="dropdown">Pages</a>
-                        <div class="dropdown-menu text-capitalize">
-                            <a href="${pageContext.request.contextPath}/home?action=reservation" class="dropdown-item">Reservation</a>
-                            <a href="${pageContext.request.contextPath}/home?action=testimonial" class="dropdown-item">Testimonial</a>
-                        </div>
-                    </div>
-                    <a href="${pageContext.request.contextPath}/home?action=contact" class="nav-item nav-link">Contact</a>
+                    <a href="${pageContext.request.contextPath}/home?action=manager" class="nav-item nav-link">User
+                        Manager</a>
                     <a href="${pageContext.request.contextPath}/home?action=login" class="nav-item nav-link"
                        onclick="document.getElementById('id01').style.display='block'; event.preventDefault();">Login</a>
                 </div>
@@ -40,14 +30,14 @@
                     </div>
 
                     <div class="container">
-                            <label for="userName"><b>Username</b></label>
-                            <input type="text" placeholder="Enter Username" name="userName" id="userName" required>
+                        <label for="userName"><b>Username</b></label>
+                        <input type="text" placeholder="Enter Username" name="userName" id="userName" required>
 
-                            <label for="passWord"><b>Password</b></label>
-                            <input type="password" placeholder="Enter Password" name="passWord" id="passWord" required>
+                        <label for="passWord"><b>Password</b></label>
+                        <input type="password" placeholder="Enter Password" name="passWord" id="passWord" required>
 
-                            <button type="submit">Login</button>
-                            <label><input type="checkbox" checked="checked" name="remember">Remember me</label>\
+                        <button type="submit">Login</button>
+                        <label><input type="checkbox" checked="checked" name="remember">Remember me</label>
                     </div>
 
                     <div class="container" style="background-color:#f1f1f1">
