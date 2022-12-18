@@ -15,6 +15,8 @@ public class UserDAO extends RootDAO implements IDAO<User> {
     private static final String UPDATE_USERS = "UPDATE users SET `userName` = ?, passWord = ?, fullName = ?, phone = ?, email = ?, address = ? WHERE `id` = ?;";
     private static final String FIND_MAX_ID = "SELECT MAX(`id`) AS id FROM users;";
     private static final String PAGINATION = "select SQL_CALC_FOUND_ROWS * from `users` limit ?, ?;";
+    private static final String SORT_ID_ASC = "SELECT * FROM `users` ORDER BY `id`;";
+    private static final String SORT_ID_DESC = "SELECT * FROM `users` ORDER BY `id` DESC;";
     private User user;
     private List<User> userList;
     public int noOfRecords;
@@ -25,6 +27,49 @@ public class UserDAO extends RootDAO implements IDAO<User> {
 
     public void setNoOfRecords(int noOfRecords) {
         this.noOfRecords = noOfRecords;
+    }
+
+    public List<User> sortIdDesc() {
+        userList = new ArrayList<>();
+        try {
+            preparedStatement = startConnect(SORT_ID_DESC);
+            rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt(1);
+                String userName = rs.getString(2);
+                String passWord = rs.getString(3);
+                String fullName = rs.getString(4);
+                String phone = rs.getString(5);
+                String email = rs.getString(6);
+                String address = rs.getString(7);
+                userList.add(new User(id, userName, passWord, fullName, phone, email, address));
+            }
+            closeConnect();
+        } catch (SQLException e) {
+            printSQLException(e);
+        }
+        return userList;
+    }
+    public List<User> sortIdAsc() {
+        userList = new ArrayList<>();
+        try {
+            preparedStatement = startConnect(SORT_ID_ASC);
+            rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt(1);
+                String userName = rs.getString(2);
+                String passWord = rs.getString(3);
+                String fullName = rs.getString(4);
+                String phone = rs.getString(5);
+                String email = rs.getString(6);
+                String address = rs.getString(7);
+                userList.add(new User(id, userName, passWord, fullName, phone, email, address));
+            }
+            closeConnect();
+        } catch (SQLException e) {
+            printSQLException(e);
+        }
+        return userList;
     }
 
     public List<User> paginationView(int offset, int noOfRecords) {
@@ -55,6 +100,7 @@ public class UserDAO extends RootDAO implements IDAO<User> {
         }
         return userList;
     }
+
     public String findPW(String userName, String email, String phone) {
         userList = selectAll();
         for (User user : userList) {

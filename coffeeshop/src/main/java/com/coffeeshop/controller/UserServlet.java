@@ -6,7 +6,6 @@ import com.coffeeshop.model.service.ProductDAO;
 import com.coffeeshop.model.service.UserDAO;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
@@ -48,6 +47,7 @@ public class UserServlet extends HttpServlet {
         }
     }
 
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = getAction(req);
@@ -64,21 +64,10 @@ public class UserServlet extends HttpServlet {
             case "edit":
                 editUser(req, resp);
                 break;
-            case "remove":
-                removeUser(req, resp);
-                break;
             default:
                 showLoginView(req, resp);
                 break;
         }
-    }
-
-
-    private void removeUser(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        int id = Integer.parseInt(req.getParameter("id"));
-//        userList = userDAO.selectAll();
-//        userList.remove(userDAO.select(id));
-//        req.getRequestDispatcher("WEB-INF/index/mainJsp/delete.jsp").forward(req, resp);
     }
 
     private void showRemoveView(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

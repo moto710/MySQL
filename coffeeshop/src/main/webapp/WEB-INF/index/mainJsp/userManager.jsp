@@ -1,4 +1,3 @@
-
 <%@ page import="com.coffeeshop.model.User" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -25,6 +24,11 @@
         .dropdown:hover .dropdown-content {
             display: block;
         }
+
+        .list {
+            list-style: none;
+            display: inline;
+        }
     </style>
 </head>
 <body>
@@ -38,22 +42,121 @@
 
 <div class="container">
     <div class="d-flex justify-content-between">
-        <h2 class="col-4">All Users</h2>
-        <button type="button" class="btn col-2"><a href="${pageContext.request.contextPath}/home?action=signUp"><i
-                class="fa fa-plus"></i> Add User</a></button>
+        <div class="col-4 d-flex">
+            <h2>All Users</h2>
+        </div>
+        <div class="d-flex justify-content-end col-5">
+            <button type="button" class="btn col-5"><a href="${pageContext.request.contextPath}/home?action=signUp"><i
+                    class="fa fa-plus"></i>Add User</a></button>
+            <div class="search-container">
+                <form class="d-inline-block">
+                    <input type="text" placeholder="Search.." name="search">
+                </form>
+            </div>
+        </div>
+
     </div>
     <form>
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>ID</th>
-                <th>User Name</th>
-                <th>Password</th>
-                <th>Full Name</th>
-                <th>Phone Number</th>
-                <th>Email</th>
-                <th>Address</th>
-                <th>Action</th>
+                <th>
+                    <ul class="list">
+                        <li>ID</li>
+                        <li>
+                            <ul class="list">
+                                <li><a href="${pageContext.request.contextPath}/home?action=manager&sort=idAsc"><i
+                                        class="fa fa-chevron-up"></i></a></li>
+                                <li><a href="${pageContext.request.contextPath}/home?action=manager&sort=idDesc"><i
+                                        class="fa fa-chevron-down"></i></a></li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                </th>
+                <th>
+                    <ul class="list">
+                        <li>User Name</li>
+                        <li>
+                            <ul class="list">
+                                <li><i class="fa fa-chevron-up"></i></li>
+                                <li><i class="fa fa-chevron-down"></i></li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                </th>
+                <th>
+                    <ul class="list">
+                        <li>Password</li>
+                        <li>
+                            <ul class="list">
+                                <li><i class="fa fa-chevron-up"></i></li>
+                                <li><i class="fa fa-chevron-down"></i></li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                </th>
+                <th>
+                    <ul class="list">
+                        <li>Full Name</li>
+                        <li>
+                            <ul class="list">
+                                <li><i class="fa fa-chevron-up"></i></li>
+                                <li><i class="fa fa-chevron-down"></i></li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                </th>
+                <th>
+                    <ul class="list">
+                        <li>Phone Number</li>
+                        <li>
+                            <ul class="list">
+                                <li><i class="fa fa-chevron-up"></i></li>
+                                <li><i class="fa fa-chevron-down"></i></li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                </th>
+                <th>
+                    <ul class="list">
+                        <li>Email</li>
+                        <li>
+                            <ul class="list">
+                                <li><i class="fa fa-chevron-up"></i></li>
+                                <li><i class="fa fa-chevron-down"></i></li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                </th>
+                <th>
+                    <ul class="list">
+                        <li>Address</li>
+                        <li>
+                            <ul class="list">
+                                <li><i class="fa fa-chevron-up"></i></li>
+                                <li><i class="fa fa-chevron-down"></i></li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                </th>
+                <th>
+                    <ul class="list">
+                        <li>Action</li>
+                        <li>
+                            <ul class="list">
+                                <li><i class="fa fa-chevron-up"></i></li>
+                                <li><i class="fa fa-chevron-down"></i></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </th>
             </tr>
             </thead>
             <tbody>
@@ -79,15 +182,18 @@
 
         <ul class="pagination">
             <li class="page-item">
-                <a class="page-link" href="${pageContext.request.contextPath}/home?action=manager&page=${requestScope.currentPage - 1}">previous</a>
+                <a class="page-link"
+                   href="${pageContext.request.contextPath}/home?action=manager&page=${requestScope.currentPage - 1}">previous</a>
             </li>
             <c:forEach begin="1" end="${requestScope.noOfPages}" var="i">
                 <li class="page-item">
-                    <a class="page-link" href="${pageContext.request.contextPath}/home?action=manager&page=${i}">${i}</a>
+                    <a class="page-link"
+                       href="${pageContext.request.contextPath}/home?action=manager&page=${i}">${i}</a>
                 </li>
             </c:forEach>
             <li class="page-item">
-                <a class="page-link" href="${pageContext.request.contextPath}/home?action=manager&page=${requestScope.currentPage + 1}">Next</a>
+                <a class="page-link"
+                   href="${pageContext.request.contextPath}/home?action=manager&page=${requestScope.currentPage + 1}">Next</a>
             </li>
 
         </ul>
