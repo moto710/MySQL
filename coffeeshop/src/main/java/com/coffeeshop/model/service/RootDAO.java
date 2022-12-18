@@ -10,7 +10,15 @@ public class RootDAO {
     protected PreparedStatement preparedStatement;
     protected ResultSet rs;
 
-    public Connection getConnection() {
+    protected void closeConnect() throws SQLException {
+        preparedStatement.close();
+        connection.close();
+    }
+    protected PreparedStatement startConnect(String SQLQuery) throws SQLException {
+        connection = getConnection();
+        return connection.prepareStatement(SQLQuery);
+    }
+    protected Connection getConnection() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
@@ -20,7 +28,7 @@ public class RootDAO {
         }
         return connection;
     }
-    public void printSQLException(SQLException ex) {
+    protected void printSQLException(SQLException ex) {
         for (Throwable e : ex) {
             if (e instanceof SQLException) {
                 e.printStackTrace(System.err);

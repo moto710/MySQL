@@ -2,6 +2,7 @@ package com.coffeeshop.model.service;
 
 import com.coffeeshop.model.User;
 
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,17 +17,20 @@ public class UserDAO extends RootDAO implements IDAO<User> {
     private static final String PAGINATION = "select SQL_CALC_FOUND_ROWS * from `users` limit ?, ?;";
     private User user;
     private List<User> userList;
-    private int noOfRecords;
+    public int noOfRecords;
 
     public int getNoOfRecords() {
-        return noOfRecords;
+        return this.noOfRecords;
+    }
+
+    public void setNoOfRecords(int noOfRecords) {
+        this.noOfRecords = noOfRecords;
     }
 
     public List<User> paginationView(int offset, int noOfRecords) {
         userList = new ArrayList<>();
         try {
-            connection = getConnection();
-            preparedStatement = connection.prepareStatement(PAGINATION);
+            preparedStatement = startConnect(PAGINATION);
             preparedStatement.setInt(1, offset);
             preparedStatement.setInt(2, noOfRecords);
             rs = preparedStatement.executeQuery();
@@ -40,25 +44,14 @@ public class UserDAO extends RootDAO implements IDAO<User> {
                 String address = rs.getString("address");
                 userList.add(new User(id, userName, passWord, fullName, phone, email, address));
             }
-            connection.close();
-            preparedStatement = connection.prepareStatement("SELECT FOUND_ROWS()");
+            preparedStatement = connection.prepareStatement("SELECT FOUND_ROWS() AS numrow");
             rs = preparedStatement.executeQuery();
             if (rs.next()) {
-                this.noOfRecords = rs.getInt(1);
+                setNoOfRecords(rs.getInt("numrow"));
             }
+            closeConnect();
         } catch (SQLException e) {
             printSQLException(e);
-        } finally {
-            try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
         }
         return userList;
     }
@@ -76,12 +69,12 @@ public class UserDAO extends RootDAO implements IDAO<User> {
     public int findBiggestId() {
         int max = -1;
         try {
-            connection = getConnection();
-            preparedStatement = connection.prepareStatement(FIND_MAX_ID);
+            preparedStatement = startConnect(FIND_MAX_ID);
             rs = preparedStatement.executeQuery();
             if (rs.next()) {
                 max = rs.getInt("id");
             }
+            closeConnect();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -90,10 +83,8 @@ public class UserDAO extends RootDAO implements IDAO<User> {
 
     @Override
     public void insert(User user) {
-        // try-with-resource statement will auto close the connection.
         try {
-            connection = getConnection();
-            preparedStatement = connection.prepareStatement(INSERT_USERS);
+            preparedStatement = startConnect(INSERT_USERS);
             preparedStatement.setInt(1, user.getId());
             preparedStatement.setString(2, user.getUserName());
             preparedStatement.setString(3, user.getPassWord());
@@ -102,6 +93,7 @@ public class UserDAO extends RootDAO implements IDAO<User> {
             preparedStatement.setString(6, user.getEmail());
             preparedStatement.setString(7, user.getAddress());
             preparedStatement.executeUpdate();
+            closeConnect();
         } catch (SQLException e) {
             printSQLException(e);
         }
@@ -109,16 +101,10 @@ public class UserDAO extends RootDAO implements IDAO<User> {
 
     @Override
     public User select(int id) {
-        // Step 1: Establishing a Connection
         try {
-            connection = getConnection();
-            // Step 2:Create a statement using connection object
-            preparedStatement = connection.prepareStatement(FIND_BY_ID);
+            preparedStatement = startConnect(FIND_BY_ID);
             preparedStatement.setInt(1, id);
-            // Step 3: Execute the query or update query
             rs = preparedStatement.executeQuery();
-
-            // Step 4: Process the ResultSet object.
             while (rs.next()) {
                 String userName = rs.getString("userName");
                 String passWord = rs.getString("passWord");
@@ -128,6 +114,7 @@ public class UserDAO extends RootDAO implements IDAO<User> {
                 String address = rs.getString("address");
                 user = new User(id, userName, passWord, fullName, phone, email, address);
             }
+            closeConnect();
         } catch (SQLException e) {
             printSQLException(e);
         }
@@ -137,13 +124,8 @@ public class UserDAO extends RootDAO implements IDAO<User> {
     @Override
     public List<User> selectAll() {
         userList = new ArrayList<>();
-        // Step 1: Establishing a Connection
         try {
-            connection = getConnection();
-
-            // Step 2:Create a statement using connection object
-            preparedStatement = connection.prepareStatement(SELECT_ALL_USERS);
-            // Step 3: Execute the query or update query
+            preparedStatement = startConnect(SELECT_ALL_USERS);
             rs = preparedStatement.executeQuery();
 
             // Step 4: Process the ResultSet object.
@@ -158,6 +140,7 @@ public class UserDAO extends RootDAO implements IDAO<User> {
 
                 userList.add(new User(id, userName, passWord, fullName, phone, email, address));
             }
+            closeConnect();
         } catch (SQLException e) {
             printSQLException(e);
         }
@@ -168,10 +151,10 @@ public class UserDAO extends RootDAO implements IDAO<User> {
     public boolean delete(int id) {
         boolean rowDeleted = false;
         try {
-            connection = getConnection();
-            preparedStatement = connection.prepareStatement(DELETE_USERS_BY_ID);
+            preparedStatement = startConnect(DELETE_USERS_BY_ID);
             preparedStatement.setInt(1, id);
             rowDeleted = preparedStatement.executeUpdate() > 0;
+            closeConnect();
         } catch (SQLException sqlException) {
             printSQLException(sqlException);
         }
@@ -182,8 +165,7 @@ public class UserDAO extends RootDAO implements IDAO<User> {
     public boolean update(User user) {
         boolean rowUpdated;
         try {
-            connection = getConnection();
-            preparedStatement = connection.prepareStatement(UPDATE_USERS);
+            preparedStatement = startConnect(UPDATE_USERS);
             preparedStatement.setInt(7, user.getId());
             preparedStatement.setString(1, user.getUserName());
             preparedStatement.setString(2, user.getPassWord());
@@ -192,6 +174,7 @@ public class UserDAO extends RootDAO implements IDAO<User> {
             preparedStatement.setString(5, user.getEmail());
             preparedStatement.setString(6, user.getAddress());
             rowUpdated = preparedStatement.executeUpdate() > 0;
+            closeConnect();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

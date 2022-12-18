@@ -1,3 +1,4 @@
+
 <%@ page import="com.coffeeshop.model.User" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -77,25 +78,17 @@
         </table>
 
         <ul class="pagination">
-            <c:if test="${requestScope.currentPage ne 1}">
-                <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/home?action=manager&page=${requestScope.currentPage - 1}">Previous</a></li>
-            </c:if>
-<c:forEach begin="1" end="${requestScope.noOfPages}" var="i">
-    <c:choose>
-        <c:when test="${requestScope.currentPage eq i}">
-            <li class="page-item"><a class="page-link" href="#">${i}</a></li>
-        </c:when>
-        <c:otherwise>
-            <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/home?action=manager&page=${i}">${i}</a></li>
-        </c:otherwise>
-    </c:choose>
-</c:forEach>
-            <c:if test="${requestScope.currentPage lt requestScope.noOfPages}">
-                <li class="page-item"><a class="page-link" href="#">Next</a></li>
-            </c:if>
-
-
-            <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/home?action=manager&page=${requestScope.currentPage + i}">3</a></li>
+            <li class="page-item">
+                <a class="page-link" href="${pageContext.request.contextPath}/home?action=manager&page=${requestScope.currentPage - 1}">previous</a>
+            </li>
+            <c:forEach begin="1" end="${requestScope.noOfPages}" var="i">
+                <li class="page-item">
+                    <a class="page-link" href="${pageContext.request.contextPath}/home?action=manager&page=${i}">${i}</a>
+                </li>
+            </c:forEach>
+            <li class="page-item">
+                <a class="page-link" href="${pageContext.request.contextPath}/home?action=manager&page=${requestScope.currentPage + 1}">Next</a>
+            </li>
 
         </ul>
     </form>

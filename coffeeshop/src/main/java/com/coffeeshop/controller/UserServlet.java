@@ -32,7 +32,7 @@ public class UserServlet extends HttpServlet {
                 break;
             case "dashboard":
                 showDashboardView(req, resp);
-            break;
+                break;
             case "manager":
                 showUserManagerView(req, resp);
                 break;
@@ -61,9 +61,6 @@ public class UserServlet extends HttpServlet {
             case "forgotPW":
                 forgotPW(req, resp);
                 break;
-            case "manager":
-                userManager(req, resp);
-                break;
             case "edit":
                 editUser(req, resp);
                 break;
@@ -77,7 +74,6 @@ public class UserServlet extends HttpServlet {
     }
 
 
-
     private void removeUser(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 //        int id = Integer.parseInt(req.getParameter("id"));
 //        userList = userDAO.selectAll();
@@ -86,9 +82,9 @@ public class UserServlet extends HttpServlet {
     }
 
     private void showRemoveView(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    int id = Integer.parseInt(req.getParameter("id"));
-    userDAO.delete(id);
-    req.getRequestDispatcher("WEB-INF/index/mainJsp/userManager.jsp").forward(req, resp);
+        int id = Integer.parseInt(req.getParameter("id"));
+        userDAO.delete(id);
+        req.getRequestDispatcher("WEB-INF/index/mainJsp/userManager.jsp").forward(req, resp);
     }
 
     private void editUser(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -102,36 +98,28 @@ public class UserServlet extends HttpServlet {
         userDAO.update(new User(id, userName, passWord, fullName, phone, email, address));
         String msg = "Change your infomation success!";
         req.setAttribute("msg", msg);
-        req.getRequestDispatcher("WEB-INF/index/mainJsp/edit.jsp").forward(req,resp);
+        req.getRequestDispatcher("WEB-INF/index/mainJsp/edit.jsp").forward(req, resp);
     }
 
     private void showEditView(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int id = Integer.parseInt(req.getParameter("id"));
         User user = userDAO.select(id);
         req.setAttribute("user", user);
-        req.getRequestDispatcher("WEB-INF/index/mainJsp/edit.jsp").forward(req,resp);
-    }
-
-    private void userManager(HttpServletRequest req, HttpServletResponse resp) {
+        req.getRequestDispatcher("WEB-INF/index/mainJsp/edit.jsp").forward(req, resp);
     }
 
     private void showUserManagerView(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int page = 1;
+        int page = req.getParameter("page") == null ? 1 : Integer.parseInt(req.getParameter("page"));
         int recordsPerPage = 5;
-        if (req.getParameter("page") != null) {
-            page = Integer.parseInt(req.getParameter("page"));
-            userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage);
-            int noOfRecords = userDAO.getNoOfRecords();
-            int noOfPages = (int)Math.ceil(noOfRecords * 1.0/recordsPerPage);
-            req.setAttribute("userList", userList);
-            req.setAttribute("noOfPages", noOfPages);
-            req.setAttribute("currentPage", page);
-            req.getRequestDispatcher("WEB-INF/index/mainJsp/userManager.jsp").forward(req, resp);
-        }
-//        userList = userDAO.selectAll();
-//        req.setAttribute("userList", userList);
-//        req.getRequestDispatcher("WEB-INF/index/mainJsp/userManager.jsp").forward(req, resp);
+        userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage);
+        int noOfRecords = userDAO.getNoOfRecords();
+        int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
+        req.setAttribute("userList", userList);
+        req.setAttribute("noOfPages", noOfPages);
+        req.setAttribute("currentPage", page);
+        req.getRequestDispatcher("WEB-INF/index/mainJsp/userManager.jsp").forward(req, resp);
     }
+
     private void showDashboardView(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         productList = productDAO.selectAll();
         req.setAttribute("productList", productList);
