@@ -2,12 +2,13 @@ package com.coffeeshop.model.service;
 
 import com.coffeeshop.model.User;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAO extends RootDAO implements IDAO<User> {
-    private static final String SELECT_ALL_USERS = "SELECT * FROM `users`;";
+    private static final String SELECT_ALL_USERS = "SELECT `id` FROM `users`;";
     private static final String INSERT_USERS = "INSERT INTO `users` (`id`, `userName`, `passWord`, `fullName`, `phone`, `email`, `address`) VALUES (?, ?, ?, ?, ?, ?, ?);";
     private static final String FIND_BY_ID = "SELECT * FROM users WHERE id = ?;";
     private static final String DELETE_USERS_BY_ID = "DELETE FROM `users` WHERE `id` = ?;";
@@ -31,31 +32,25 @@ public class UserDAO extends RootDAO implements IDAO<User> {
         userList = new ArrayList<>();
         try { //SELECT SQL_CALC_FOUND_ROWS * FROM `users` WHERE `userName` LIKE ? OR `fullName` LIKE ? OR `address` LIKE ? OR `email` LIKE ? OR `phone` LIKE ? ORDER BY ? ? limit ?, ?;
             preparedStatement = startConnect(PAGINATION);
-            preparedStatement.setString(6, orderBy);
-            preparedStatement.setString(7, order);
-            preparedStatement.setInt(8, offset);
-            preparedStatement.setInt(9, noOfRecords);
             preparedStatement.setString(1, "%" + keyword + "%");
             preparedStatement.setString(2, "%" + keyword + "%");
             preparedStatement.setString(3, "%" + keyword + "%");
             preparedStatement.setString(4, "%" + keyword + "%");
             preparedStatement.setString(5, "%" + keyword + "%");
+            preparedStatement.setString(6, orderBy);
+            preparedStatement.setString(7, order);
+            preparedStatement.setInt(8, offset);
+            preparedStatement.setInt(9, noOfRecords);
             rs = preparedStatement.executeQuery();
             while (rs.next()) {
-                int id = rs.getInt("id");
-                String userName = rs.getString("userName");
-                String passWord = rs.getString("passWord");
-                String fullName = rs.getString("fullName");
-                String phone = rs.getString("phone");
-                String email = rs.getString("email");
-                String address = rs.getString("address");
-                userList.add(new User(id, userName, passWord, fullName, phone, email, address));
+                userList.add(getUserFromRS(rs));
             }
             preparedStatement = connection.prepareStatement("SELECT FOUND_ROWS() AS numrow");
             rs = preparedStatement.executeQuery();
             if (rs.next()) {
                 setNoOfRecords(rs.getInt("numrow"));
             }
+            System.out.println(this.getClass() + " paginationView: " + preparedStatement);
             closeConnect();
         } catch (SQLException e) {
             printSQLException(e);
@@ -63,6 +58,16 @@ public class UserDAO extends RootDAO implements IDAO<User> {
         return userList;
     }
 
+    public User getUserFromRS(ResultSet resultSet) throws SQLException {
+        int id = rs.getInt("id");
+        String userName = rs.getString("userName");
+        String passWord = rs.getString("passWord");
+        String fullName = rs.getString("fullName");
+        String phone = rs.getString("phone");
+        String email = rs.getString("email");
+        String address = rs.getString("address");
+        return new User(id, userName, passWord, fullName, phone, email, address);
+    }
     public User returnLogin(String userName, String password) {
         userList = selectAll();
         for (User item : userList) {
@@ -84,18 +89,17 @@ public class UserDAO extends RootDAO implements IDAO<User> {
 
     @Override
     public int findBiggestId() {
-        int max = -1;
         try {
             preparedStatement = startConnect(FIND_MAX_ID);
             rs = preparedStatement.executeQuery();
             if (rs.next()) {
-                max = rs.getInt("id");
+                return rs.getInt("id");
             }
             closeConnect();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return max;
+        return -1;
     }
 
     @Override
@@ -144,18 +148,16 @@ public class UserDAO extends RootDAO implements IDAO<User> {
         try {
             preparedStatement = startConnect(SELECT_ALL_USERS);
             rs = preparedStatement.executeQuery();
-
-            // Step 4: Process the ResultSet object.
             while (rs.next()) {
                 int id = rs.getInt("id");
-                String userName = rs.getString("userName");
-                String passWord = rs.getString("passWord");
-                String fullName = rs.getString("fullName");
-                String phone = rs.getString("phone");
-                String email = rs.getString("email");
-                String address = rs.getString("address");
+//                String userName = rs.getString("userName");
+//                String passWord = rs.getString("passWord");
+//                String fullName = rs.getString("fullName");
+//                String phone = rs.getString("phone");
+//                String email = rs.getString("email");
+//                String address = rs.getString("address");
 
-                userList.add(new User(id, userName, passWord, fullName, phone, email, address));
+                userList.add(select(id));
             }
             closeConnect();
         } catch (SQLException e) {

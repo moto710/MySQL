@@ -219,7 +219,8 @@
                     <td>
                         <a href="${pageContext.request.contextPath}/home?action=edit&id=${user.getId()}"><i
                                 class="fa fa-edit"></i></a>
-                        <a href="${pageContext.request.contextPath}/home?action=remove&id=${user.getId()}"><i
+                        <a href="${pageContext.request.contextPath}/home?action=remove&id=${user.getId()}"
+                           class="confirmDelete"><i
                                 class="fa fa-trash"></i></a>
                     </td>
                 </tr>
@@ -270,6 +271,15 @@
 <!-- Back to Top -->
 <jsp:include page="/WEB-INF/index/layout/backToTop.jsp"></jsp:include>
 
+<script type="text/javascript">
+    var elems = document.getElementsByClassName('confirmDelete');
+    var confirmIt = function (e) {
+        if (!confirm('Are you sure?')) e.preventDefault();
+    };
+    for (var i = 0, l = elems.length; i < l; i++) {
+        elems[i].addEventListener('click', confirmIt, false);
+    }
+</script>
 
 </body>
 </html>

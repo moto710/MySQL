@@ -18,6 +18,10 @@ public class UserServlet extends HttpServlet {
     private User user;
     private Set<String> errors;
     private String message;
+    private static int page;
+    private static int recordsPerPage;
+    private static String keyword;
+    private static String sort;
     private static final long serialVersionUID = 1L;
 
     @Override
@@ -96,18 +100,14 @@ public class UserServlet extends HttpServlet {
     }
 
     private void showUserManagerView(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int page = req.getParameter("page") == null ? 1 : Integer.parseInt(req.getParameter("page"));
-        int recordsPerPage = req.getParameter("recordsPerPage") == null ? 5 : Integer.parseInt(req.getParameter("recordsPerPage"));
-        String keyword = req.getParameter("keyword") == null ? "" : req.getParameter("keyword");
-
-        String sort = req.getParameter("sort") == null ? "idAsc" : req.getParameter("sort");
+        page = req.getParameter("page") == null ? 1 : Integer.parseInt(req.getParameter("page"));
+        recordsPerPage = req.getParameter("recordsPerPage") == null ? 5 : Integer.parseInt(req.getParameter("recordsPerPage"));
+        keyword = req.getParameter("keyword") == null ? "" : req.getParameter("keyword");
+        sort = req.getParameter("sort") == null ? "idDesc" : req.getParameter("sort");
 
         switch (sort) {
-            case "idAsc":
-                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, keyword, "id", "ASC");
-                break;
             case "idDesc":
-                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, keyword, "id", "DESC");
+                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, keyword, "id", "desc");
                 break;
             case "userNameAsc":
                 userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, keyword, "userName", "ASC");
@@ -146,7 +146,7 @@ public class UserServlet extends HttpServlet {
                 userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, keyword, "address", "DESC");
                 break;
             default:
-                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, keyword, "id", "ASC");
+                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, keyword, "id", "DESC");
                 break;
         }
         int noOfRecords = userDAO.getNoOfRecords();
