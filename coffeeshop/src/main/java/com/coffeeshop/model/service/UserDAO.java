@@ -9,7 +9,7 @@ import java.util.List;
 
 public class UserDAO extends RootDAO implements IDAO<User> {
     private static final String SELECT_ALL_USERS = "SELECT `id` FROM `users`;";
-    private static final String INSERT_USERS = "INSERT INTO `users` (`id`, `userName`, `passWord`, `fullName`, `phone`, `email`, `address`) VALUES (?, ?, ?, ?, ?, ?, ?);";
+    private static final String INSERT_USERS = "INSERT INTO `users` VALUES (?, ?, ?, ?, ?, ?, ?);";
     private static final String FIND_BY_ID = "SELECT * FROM users WHERE id = ?;";
     private static final String DELETE_USERS_BY_ID = "DELETE FROM `users` WHERE `id` = ?;";
     private static final String UPDATE_USERS = "UPDATE users SET `userName` = ?, passWord = ?, fullName = ?, phone = ?, email = ?, address = ? WHERE `id` = ?;";
