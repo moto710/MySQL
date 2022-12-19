@@ -16,7 +16,7 @@
             position: absolute;
             background-color: #f9f9f9;
             min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
             padding: 12px 16px;
             z-index: 1;
         }
@@ -29,7 +29,8 @@
             list-style: none;
             display: inline;
         }
-        .hidden{
+
+        .hidden {
             opacity: 0;
         }
     </style>
@@ -53,7 +54,11 @@
                     class="fa fa-plus"></i>Add User</a></button>
             <div class="search-container">
                 <form class="d-inline-block">
-                    <input type="text" placeholder="Search..." name="keyword">
+                    <input type="text" placeholder="Search..." name="keyword" value="${requestScope.keyword}">
+                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=${requestScope.sort}&keyword=${requestScope.keyword}">
+                        <button type="submit">Search</button>
+                    </a>
+
                 </form>
             </div>
         </div>
@@ -68,10 +73,12 @@
                         <li>ID</li>
                         <li>
                             <ul class="list">
-                                <li><a href="${pageContext.request.contextPath}/home?action=manager&sort=idAsc"><i
-                                        class="fa fa-chevron-up"></i></a></li>
-                                <li><a href="${pageContext.request.contextPath}/home?action=manager&sort=idDesc"><i
-                                        class="fa fa-chevron-down"></i></a></li>
+                                <li>
+                                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=idAsc&keyword=${requestScope.keyword}"><i
+                                            class="fa fa-chevron-up"></i></a></li>
+                                <li>
+                                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=idDesc&keyword=${requestScope.keyword}"><i
+                                            class="fa fa-chevron-down"></i></a></li>
                             </ul>
                         </li>
                     </ul>
@@ -82,8 +89,12 @@
                         <li>User Name</li>
                         <li>
                             <ul class="list">
-                                <li><a href="${pageContext.request.contextPath}/home?action=manager&sort=userNameAsc"><i class="fa fa-chevron-up"></i></a></li>
-                                <li><a href="${pageContext.request.contextPath}/home?action=manager&sort=userNameDesc"><i class="fa fa-chevron-down"></i></a></li>
+                                <li>
+                                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=userNameAsc&keyword=${requestScope.keyword}"><i
+                                            class="fa fa-chevron-up"></i></a></li>
+                                <li>
+                                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=userNameDesc&keyword=${requestScope.keyword}"><i
+                                            class="fa fa-chevron-down"></i></a></li>
                             </ul>
                         </li>
                     </ul>
@@ -94,8 +105,12 @@
                         <li>Password</li>
                         <li>
                             <ul class="list">
-                                <li><a href="${pageContext.request.contextPath}/home?action=manager&sort=passWordAsc"><i class="fa fa-chevron-up"></i></a></li>
-                                <li><a href="${pageContext.request.contextPath}/home?action=manager&sort=passWordDesc"><i class="fa fa-chevron-down"></i></a></li>
+                                <li>
+                                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=passWordAsc&keyword=${requestScope.keyword}"><i
+                                            class="fa fa-chevron-up"></i></a></li>
+                                <li>
+                                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=passWordDesc&keyword=${requestScope.keyword}"><i
+                                            class="fa fa-chevron-down"></i></a></li>
                             </ul>
                         </li>
                     </ul>
@@ -106,8 +121,12 @@
                         <li>Full Name</li>
                         <li>
                             <ul class="list">
-                                <li><a href="${pageContext.request.contextPath}/home?action=manager&sort=fullNameAsc"><i class="fa fa-chevron-up"></i></a></li>
-                                <li><a href="${pageContext.request.contextPath}/home?action=manager&sort=fullNameDesc"><i class="fa fa-chevron-down"></i></a></li>
+                                <li>
+                                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=fullNameAsc&keyword=${requestScope.keyword}"><i
+                                            class="fa fa-chevron-up"></i></a></li>
+                                <li>
+                                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=fullNameDesc&keyword=${requestScope.keyword}"><i
+                                            class="fa fa-chevron-down"></i></a></li>
                             </ul>
                         </li>
                     </ul>
@@ -118,8 +137,12 @@
                         <li>Phone Number</li>
                         <li>
                             <ul class="list">
-                                <li><a href="${pageContext.request.contextPath}/home?action=manager&sort=phoneAsc"><i class="fa fa-chevron-up"></i></a></li>
-                                <li><a href="${pageContext.request.contextPath}/home?action=manager&sort=phoneDesc"><i class="fa fa-chevron-down"></i></a></li>
+                                <li>
+                                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=phoneAsc&keyword=${requestScope.keyword}"><i
+                                            class="fa fa-chevron-up"></i></a></li>
+                                <li>
+                                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=phoneDesc&keyword=${requestScope.keyword}"><i
+                                            class="fa fa-chevron-down"></i></a></li>
                             </ul>
                         </li>
                     </ul>
@@ -130,8 +153,12 @@
                         <li>Email</li>
                         <li>
                             <ul class="list">
-                                <li><a href="${pageContext.request.contextPath}/home?action=manager&sort=emailAsc"><i class="fa fa-chevron-up"></i></a></li>
-                                <li><a href="${pageContext.request.contextPath}/home?action=manager&sort=emailDesc"><i class="fa fa-chevron-down"></i></a></li>
+                                <li>
+                                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=emailAsc&keyword=${requestScope.keyword}"><i
+                                            class="fa fa-chevron-up"></i></a></li>
+                                <li>
+                                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=emailDesc&keyword=${requestScope.keyword}"><i
+                                            class="fa fa-chevron-down"></i></a></li>
                             </ul>
                         </li>
                     </ul>
@@ -142,8 +169,12 @@
                         <li>Address</li>
                         <li>
                             <ul class="list">
-                                <li><a href="${pageContext.request.contextPath}/home?action=manager&sort=addressAsc"><i class="fa fa-chevron-up"></i></a></li>
-                                <li><a href="${pageContext.request.contextPath}/home?action=manager&sort=addressDesc"><i class="fa fa-chevron-down"></i></a></li>
+                                <li>
+                                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=addressAsc&keyword=${requestScope.keyword}"><i
+                                            class="fa fa-chevron-up"></i></a></li>
+                                <li>
+                                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=addressDesc&keyword=${requestScope.keyword}"><i
+                                            class="fa fa-chevron-down"></i></a></li>
                             </ul>
                         </li>
                     </ul>
@@ -201,10 +232,18 @@
 
             </ul>
             <ul class="pagination justify-content-end">
-                <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/home?action=manager&recordsPerPage=5">5</a></li>
-                <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/home?action=manager&recordsPerPage=10">10</a></li>
-                <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/home?action=manager&recordsPerPage=15">15</a></li>
-                <li class="page-item"><a class="page-link" href="${pageContext.request.contextPath}/home?action=manager&recordsPerPage=50">50</a></li>
+                <li class="page-item"><a class="page-link"
+                                         href="${pageContext.request.contextPath}/home?action=manager&recordsPerPage=5">5</a>
+                </li>
+                <li class="page-item"><a class="page-link"
+                                         href="${pageContext.request.contextPath}/home?action=manager&recordsPerPage=10">10</a>
+                </li>
+                <li class="page-item"><a class="page-link"
+                                         href="${pageContext.request.contextPath}/home?action=manager&recordsPerPage=15">15</a>
+                </li>
+                <li class="page-item"><a class="page-link"
+                                         href="${pageContext.request.contextPath}/home?action=manager&recordsPerPage=50">50</a>
+                </li>
             </ul>
         </div>
     </form>

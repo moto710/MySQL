@@ -14,21 +14,8 @@ public class UserDAO extends RootDAO implements IDAO<User> {
     private static final String DELETE_USERS_BY_ID = "DELETE FROM `users` WHERE `id` = ?;";
     private static final String UPDATE_USERS = "UPDATE users SET `userName` = ?, passWord = ?, fullName = ?, phone = ?, email = ?, address = ? WHERE `id` = ?;";
     private static final String FIND_MAX_ID = "SELECT MAX(`id`) AS id FROM users;";
-    private static final String PAGINATION = "select SQL_CALC_FOUND_ROWS * from `users` limit ?, ?;";
-    public final String SORT_ID_ASC_PAGINATION = "SELECT SQL_CALC_FOUND_ROWS * FROM `users` ORDER BY `id` limit ?, ?;";
-    public final String SORT_ID_DESC_PAGINATION = "SELECT SQL_CALC_FOUND_ROWS * FROM `users` ORDER BY `id` DESC limit ?, ?;";
-    public final String SORT_USER_NAME_ASC_PAGINATION = "SELECT SQL_CALC_FOUND_ROWS * FROM `users` ORDER BY `userName` limit ?, ?;";
-    public final String SORT_USER_NAME_DESC_PAGINATION = "SELECT SQL_CALC_FOUND_ROWS * FROM `users` ORDER BY `userName` DESC limit ?, ?;";
-    public final String SORT_PASSWORD_ASC_PAGINATION = "SELECT SQL_CALC_FOUND_ROWS * FROM `users` ORDER BY `passWord` limit ?, ?;";
-    public final String SORT_PASSWORD_DESC_PAGINATION = "SELECT SQL_CALC_FOUND_ROWS * FROM `users` ORDER BY `passWord` DESC limit ?, ?;";
-    public final String SORT_NAME_ASC_PAGINATION = "SELECT SQL_CALC_FOUND_ROWS * FROM `users` ORDER BY `fullName` limit ?, ?;";
-    public final String SORT_NAME_DESC_PAGINATION = "SELECT SQL_CALC_FOUND_ROWS * FROM `users` ORDER BY `fullName` DESC limit ?, ?;";
-    public final String SORT_PHONE_ASC_PAGINATION = "SELECT SQL_CALC_FOUND_ROWS * FROM `users` ORDER BY `phone` limit ?, ?;";
-    public final String SORT_PHONE_DESC_PAGINATION = "SELECT SQL_CALC_FOUND_ROWS * FROM `users` ORDER BY `phone` DESC limit ?, ?;";
-    public final String SORT_EMAIL_ASC_PAGINATION = "SELECT SQL_CALC_FOUND_ROWS * FROM `users` ORDER BY `email` limit ?, ?;";
-    public final String SORT_EMAIL_DESC_PAGINATION = "SELECT SQL_CALC_FOUND_ROWS * FROM `users` ORDER BY `email` DESC limit ?, ?;";
-    public final String SORT_ADDRESS_ASC_PAGINATION = "SELECT SQL_CALC_FOUND_ROWS * FROM `users` ORDER BY `address` limit ?, ?;";
-    public final String SORT_ADDRESS_DESC_PAGINATION = "SELECT SQL_CALC_FOUND_ROWS * FROM `users` ORDER BY `address` DESC limit ?, ?;";
+    public final String SORT_ID_ASC_PAGINATION = "SELECT SQL_CALC_FOUND_ROWS * FROM `users` WHERE `userName` LIKE ? OR `fullName` LIKE ? OR `address` LIKE ? OR `email` LIKE ? OR `phone` LIKE ? ORDER BY ? ? limit ?, ?;";
+
     private User user;
     private List<User> userList;
     public int noOfRecords;
@@ -41,13 +28,19 @@ public class UserDAO extends RootDAO implements IDAO<User> {
         this.noOfRecords = noOfRecords;
     }
 
-
-    public List<User> paginationView(int offset, int noOfRecords, String SQLQuery) {
+    public List<User> paginationView(int offset, int noOfRecords, String SQLQuery, String keyword, String orderBy, String order) {
         userList = new ArrayList<>();
         try {
             preparedStatement = startConnect(SQLQuery);
-            preparedStatement.setInt(1, offset);
-            preparedStatement.setInt(2, noOfRecords);
+            preparedStatement.setString(6, orderBy);
+            preparedStatement.setString(7, order);
+            preparedStatement.setInt(8, offset);
+            preparedStatement.setInt(9, noOfRecords);
+            preparedStatement.setString(1, "%" + keyword + "%");
+            preparedStatement.setString(2, "%" + keyword + "%");
+            preparedStatement.setString(3, "%" + keyword + "%");
+            preparedStatement.setString(4, "%" + keyword + "%");
+            preparedStatement.setString(5, "%" + keyword + "%");
             rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("id");

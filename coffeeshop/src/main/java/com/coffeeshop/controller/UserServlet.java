@@ -19,8 +19,6 @@ public class UserServlet extends HttpServlet {
     private List<User> userList;
     private User user;
     private static final long serialVersionUID = 1L;
-    private int page;
-    private int recordsPerPage;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
@@ -98,61 +96,62 @@ public class UserServlet extends HttpServlet {
     }
 
     private void showUserManagerView(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        page = req.getParameter("page") == null ? 1 : Integer.parseInt(req.getParameter("page"));
-        recordsPerPage = req.getParameter("recordsPerPage") == null ? 5 : Integer.parseInt(req.getParameter("recordsPerPage"));
-
+        int page = req.getParameter("page") == null ? 1 : Integer.parseInt(req.getParameter("page"));
+        int recordsPerPage = req.getParameter("recordsPerPage") == null ? 5 : Integer.parseInt(req.getParameter("recordsPerPage"));
+        String keyword = req.getParameter("keyword") == null ? "" : req.getParameter("keyword");
 
         String sort = req.getParameter("sort") == null ? "idAsc" : req.getParameter("sort");
 
         switch (sort) {
             case "idAsc":
-                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, userDAO.SORT_ID_ASC_PAGINATION);
+                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, userDAO.SORT_ID_ASC_PAGINATION, keyword, "id", "ASC");
                 break;
             case "idDesc":
-                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, userDAO.SORT_ID_DESC_PAGINATION);
+                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, userDAO.SORT_ID_ASC_PAGINATION, keyword, "id", "DESC");
                 break;
             case "userNameAsc":
-                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, userDAO.SORT_USER_NAME_ASC_PAGINATION);
+                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, userDAO.SORT_ID_ASC_PAGINATION, keyword, "userName", "ASC");
                 break;
             case "userNameDesc":
-                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, userDAO.SORT_USER_NAME_DESC_PAGINATION);
+                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, userDAO.SORT_ID_ASC_PAGINATION, keyword, "userName", "DESC");
                 break;
             case "passWordAsc":
-                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, userDAO.SORT_PASSWORD_ASC_PAGINATION);
+                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, userDAO.SORT_ID_ASC_PAGINATION, keyword, "passWord", "ASC");
                 break;
             case "passWordDesc":
-                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, userDAO.SORT_PASSWORD_DESC_PAGINATION);
+                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, userDAO.SORT_ID_ASC_PAGINATION, keyword, "passWord", "DESC");
                 break;
             case "fullNameAsc":
-                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, userDAO.SORT_NAME_ASC_PAGINATION);
+                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, userDAO.SORT_ID_ASC_PAGINATION, keyword, "fullName", "ASC");
                 break;
             case "fullNameDesc":
-                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, userDAO.SORT_NAME_DESC_PAGINATION);
+                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, userDAO.SORT_ID_ASC_PAGINATION, keyword, "fullName", "DESC");
                 break;
             case "phoneAsc":
-                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, userDAO.SORT_PHONE_ASC_PAGINATION);
+                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, userDAO.SORT_ID_ASC_PAGINATION, keyword, "phone", "ASC");
                 break;
             case "phoneDesc":
-                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, userDAO.SORT_PHONE_DESC_PAGINATION);
+                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, userDAO.SORT_ID_ASC_PAGINATION, keyword, "phone", "DESC");
                 break;
             case "emailAsc":
-                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, userDAO.SORT_EMAIL_ASC_PAGINATION);
+                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, userDAO.SORT_ID_ASC_PAGINATION, keyword, "email", "ASC");
                 break;
             case "emailDesc":
-                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, userDAO.SORT_EMAIL_DESC_PAGINATION);
+                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, userDAO.SORT_ID_ASC_PAGINATION, keyword, "email", "DESC");
                 break;
             case "addressAsc":
-                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, userDAO.SORT_ADDRESS_ASC_PAGINATION);
+                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, userDAO.SORT_ID_ASC_PAGINATION, keyword, "address", "ASC");
                 break;
             case "addressDesc":
-                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, userDAO.SORT_ADDRESS_DESC_PAGINATION);
+                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, userDAO.SORT_ID_ASC_PAGINATION, keyword, "address", "DESC");
                 break;
             default:
-                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, userDAO.SORT_ID_ASC_PAGINATION);
+                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, userDAO.SORT_ID_ASC_PAGINATION, keyword, "id", "ASC");
                 break;
         }
         int noOfRecords = userDAO.getNoOfRecords();
         int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
+        req.setAttribute("keyword", keyword);
         req.setAttribute("userList", userList);
         req.setAttribute("noOfPages", noOfPages);
         req.setAttribute("currentPage", page);
