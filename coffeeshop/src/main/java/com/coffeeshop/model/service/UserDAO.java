@@ -2,7 +2,6 @@ package com.coffeeshop.model.service;
 
 import com.coffeeshop.model.User;
 
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +13,7 @@ public class UserDAO extends RootDAO implements IDAO<User> {
     private static final String DELETE_USERS_BY_ID = "DELETE FROM `users` WHERE `id` = ?;";
     private static final String UPDATE_USERS = "UPDATE users SET `userName` = ?, passWord = ?, fullName = ?, phone = ?, email = ?, address = ? WHERE `id` = ?;";
     private static final String FIND_MAX_ID = "SELECT MAX(`id`) AS id FROM users;";
-    public final String SORT_ID_ASC_PAGINATION = "SELECT SQL_CALC_FOUND_ROWS * FROM `users` WHERE `userName` LIKE ? OR `fullName` LIKE ? OR `address` LIKE ? OR `email` LIKE ? OR `phone` LIKE ? ORDER BY ? ? limit ?, ?;";
+    public final String PAGINATION = "SELECT SQL_CALC_FOUND_ROWS * FROM `users` WHERE `userName` LIKE ? OR `fullName` LIKE ? OR `address` LIKE ? OR `email` LIKE ? OR `phone` LIKE ? ORDER BY ? ? limit ?, ?;";
 
     private User user;
     private List<User> userList;
@@ -28,10 +27,10 @@ public class UserDAO extends RootDAO implements IDAO<User> {
         this.noOfRecords = noOfRecords;
     }
 
-    public List<User> paginationView(int offset, int noOfRecords, String SQLQuery, String keyword, String orderBy, String order) {
+    public List<User> paginationView(int offset, int noOfRecords, String keyword, String orderBy, String order) {
         userList = new ArrayList<>();
-        try {
-            preparedStatement = startConnect(SQLQuery);
+        try { //SELECT SQL_CALC_FOUND_ROWS * FROM `users` WHERE `userName` LIKE ? OR `fullName` LIKE ? OR `address` LIKE ? OR `email` LIKE ? OR `phone` LIKE ? ORDER BY ? ? limit ?, ?;
+            preparedStatement = startConnect(PAGINATION);
             preparedStatement.setString(6, orderBy);
             preparedStatement.setString(7, order);
             preparedStatement.setInt(8, offset);
@@ -64,6 +63,15 @@ public class UserDAO extends RootDAO implements IDAO<User> {
         return userList;
     }
 
+    public User returnLogin(String userName, String password) {
+        userList = selectAll();
+        for (User item : userList) {
+            if (item.getUserName().equals(userName) && item.getPassWord().equals(password)) {
+                return item;
+            }
+        }
+        return null;
+    }
     public String findPW(String userName, String email, String phone) {
         userList = selectAll();
         for (User user : userList) {

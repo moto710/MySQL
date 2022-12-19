@@ -1,8 +1,6 @@
 package com.coffeeshop.controller;
 
-import com.coffeeshop.model.Product;
 import com.coffeeshop.model.User;
-import com.coffeeshop.model.service.ProductDAO;
 import com.coffeeshop.model.service.UserDAO;
 
 import java.io.*;
@@ -18,6 +16,8 @@ public class UserServlet extends HttpServlet {
     private final UserDAO userDAO = new UserDAO();
     private List<User> userList;
     private User user;
+    private Set<String> errors;
+    private String message;
     private static final long serialVersionUID = 1L;
 
     @Override
@@ -104,49 +104,49 @@ public class UserServlet extends HttpServlet {
 
         switch (sort) {
             case "idAsc":
-                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, userDAO.SORT_ID_ASC_PAGINATION, keyword, "id", "ASC");
+                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, keyword, "id", "ASC");
                 break;
             case "idDesc":
-                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, userDAO.SORT_ID_ASC_PAGINATION, keyword, "id", "DESC");
+                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, keyword, "id", "DESC");
                 break;
             case "userNameAsc":
-                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, userDAO.SORT_ID_ASC_PAGINATION, keyword, "userName", "ASC");
+                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, keyword, "userName", "ASC");
                 break;
             case "userNameDesc":
-                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, userDAO.SORT_ID_ASC_PAGINATION, keyword, "userName", "DESC");
+                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, keyword, "userName", "DESC");
                 break;
             case "passWordAsc":
-                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, userDAO.SORT_ID_ASC_PAGINATION, keyword, "passWord", "ASC");
+                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, keyword, "passWord", "ASC");
                 break;
             case "passWordDesc":
-                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, userDAO.SORT_ID_ASC_PAGINATION, keyword, "passWord", "DESC");
+                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, keyword, "passWord", "DESC");
                 break;
             case "fullNameAsc":
-                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, userDAO.SORT_ID_ASC_PAGINATION, keyword, "fullName", "ASC");
+                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, keyword, "fullName", "ASC");
                 break;
             case "fullNameDesc":
-                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, userDAO.SORT_ID_ASC_PAGINATION, keyword, "fullName", "DESC");
+                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, keyword, "fullName", "DESC");
                 break;
             case "phoneAsc":
-                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, userDAO.SORT_ID_ASC_PAGINATION, keyword, "phone", "ASC");
+                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, keyword, "phone", "ASC");
                 break;
             case "phoneDesc":
-                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, userDAO.SORT_ID_ASC_PAGINATION, keyword, "phone", "DESC");
+                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, keyword, "phone", "DESC");
                 break;
             case "emailAsc":
-                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, userDAO.SORT_ID_ASC_PAGINATION, keyword, "email", "ASC");
+                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, keyword, "email", "ASC");
                 break;
             case "emailDesc":
-                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, userDAO.SORT_ID_ASC_PAGINATION, keyword, "email", "DESC");
+                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, keyword, "email", "DESC");
                 break;
             case "addressAsc":
-                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, userDAO.SORT_ID_ASC_PAGINATION, keyword, "address", "ASC");
+                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, keyword, "address", "ASC");
                 break;
             case "addressDesc":
-                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, userDAO.SORT_ID_ASC_PAGINATION, keyword, "address", "DESC");
+                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, keyword, "address", "DESC");
                 break;
             default:
-                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, userDAO.SORT_ID_ASC_PAGINATION, keyword, "id", "ASC");
+                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, keyword, "id", "ASC");
                 break;
         }
         int noOfRecords = userDAO.getNoOfRecords();
@@ -176,7 +176,7 @@ public class UserServlet extends HttpServlet {
     }
 
     private void signUp(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Set<String> errors = new HashSet<>();
+        errors = new HashSet<>();
         userList = userDAO.selectAll();
         int id = userDAO.findBiggestId() + 1;
         String userName = req.getParameter("userName");
@@ -203,6 +203,7 @@ public class UserServlet extends HttpServlet {
         user = new User(id, userName, passWord, fullName, phone, email, address);
         userDAO.insert(user);
         if (errors.isEmpty()) {
+            req.setAttribute("user", user);
             req.getRequestDispatcher("WEB-INF/index/mainJsp/signUpForm.jsp").forward(req, resp);
         } else {
             req.setAttribute("errors", errors);
@@ -217,20 +218,19 @@ public class UserServlet extends HttpServlet {
 
 
     private void login(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        userList = userDAO.selectAll();
         String userName = req.getParameter("userName");
         String passWord = req.getParameter("passWord");
-        User loginUser = null;
-        for (User user : userList) {
-            if (user.getUserName().equals(userName) && user.getPassWord().equals(passWord)) {
-                loginUser = user;
-                req.setAttribute("loginUser", loginUser);
-                req.getRequestDispatcher("WEB-INF/index/mainJsp/dashboard.jsp").forward(req, resp);
-                break;
-            }
+        user = userDAO.returnLogin(userName, passWord);
+        userList = userDAO.selectAll();
+        if (user != null) {
+            req.setAttribute("user", user);
+            req.setAttribute("userList", userList);
+            req.getRequestDispatcher("WEB-INF/index/mainJsp/userManager.jsp").forward(req, resp);
+        } else {
+            message = "Account not found!";
+            req.setAttribute("message", message);
+            req.getRequestDispatcher("WEB-INF/index/mainJsp/index.jsp").forward(req, resp);
         }
-        req.setAttribute("loginUser", loginUser);
-        req.getRequestDispatcher("WEB-INF/index/mainJsp/index.jsp").forward(req, resp);
     }
 
     protected void showLoginView(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

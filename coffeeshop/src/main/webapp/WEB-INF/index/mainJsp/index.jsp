@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -16,7 +17,23 @@
 
 <!-- About Start -->
 <jsp:include page="/WEB-INF/index/layout/about.jsp"></jsp:include>
-    <!-- About End -->
+<!-- About End -->
+
+<c:if test="${requestScope.message ne null}">
+    <h1>${requestScope.message}</h1>
+    <script>
+        let message = '<c:out value="${requestScope.message}" />';
+        Swal.fire({
+            title: message,
+            showClass: {
+                popup: 'animate__animated animate__fadeInDown'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__fadeOutUp'
+            }
+        })
+    </script>
+</c:if>
 
 <!-- Service Start -->
 <jsp:include page="/WEB-INF/index/layout/service.jsp"></jsp:include>

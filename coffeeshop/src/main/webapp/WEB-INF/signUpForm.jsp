@@ -20,7 +20,7 @@
   <h1>Welcome to MT Coffee shop</h1>
   <div class="main-agileinfo">
     <div class="agileits-top">
-      <form action="#" method="post">
+      <form method="post">
         <input class="text" type="text" name="userName" placeholder="Username" required>
         <input class="text email" type="email" name="email" placeholder="Email" required>
         <input class="text" type="password" name="passWord" placeholder="Password" required>

@@ -44,6 +44,21 @@
 <jsp:include page="/WEB-INF/index/layout/carousel.jsp"></jsp:include>
 <!-- Carousel End -->
 
+<c:if test="${requestScope.user ne null}">
+    <script>
+        let name = '<%= ((User) request.getAttribute("user")).getFullName() %>';
+        Swal.fire({
+            title: 'welcome back ' + name,
+            showClass: {
+                popup: 'animate__animated animate__fadeInDown'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__fadeOutUp'
+            }
+        })
+    </script>
+</c:if>
+
 <div class="container">
     <div class="d-flex justify-content-between">
         <div class="col-4 d-flex">
@@ -53,12 +68,10 @@
             <button type="button" class="btn col-5"><a href="${pageContext.request.contextPath}/home?action=signUp"><i
                     class="fa fa-plus"></i>Add User</a></button>
             <div class="search-container">
-                <form class="d-inline-block">
+                <form method="get" action="${pageContext.request.contextPath}/home">
+                    <input type="hidden" name="action" value="manager">
                     <input type="text" placeholder="Search..." name="keyword" value="${requestScope.keyword}">
-                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=${requestScope.sort}&keyword=${requestScope.keyword}">
-                        <button type="submit">Search</button>
-                    </a>
-
+                    <button type="submit">Search</button>
                 </form>
             </div>
         </div>

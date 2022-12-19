@@ -30,14 +30,18 @@
                     </div>
 
                     <div class="container">
-                        <label for="userName"><b>Username</b></label>
-                        <input type="text" placeholder="Enter Username" name="userName" id="userName" required>
+                        <form method="post" action="${pageContext.request.contextPath}/home">
+                            <input hidden name="action" value="login">
+                            <label for="userName"><b>Username</b></label>
+                            <input type="text" placeholder="Enter Username" name="userName" id="userName" required>
 
-                        <label for="passWord"><b>Password</b></label>
-                        <input type="password" placeholder="Enter Password" name="passWord" id="passWord" required>
+                            <label for="passWord"><b>Password</b></label>
+                            <input type="password" placeholder="Enter Password" name="passWord" id="passWord" required>
 
-                        <button type="submit">Login</button>
-                        <label><input type="checkbox" checked="checked" name="remember">Remember me</label>
+                            <button type="submit">Login</button>
+                            <label><input type="checkbox" checked="checked" name="remember">Remember me</label>
+                        </form>
+
                     </div>
 
                     <div class="container" style="background-color:#f1f1f1">

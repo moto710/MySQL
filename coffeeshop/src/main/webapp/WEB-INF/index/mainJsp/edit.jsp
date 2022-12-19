@@ -29,6 +29,16 @@
     </script>
 </c:if>
 
+<c:if test="${requestScope.errors ne null}">
+    <div class="alert alert-danger" role="alert">
+        <ul>
+            <c:forEach items="${requestScope.errors}" var="error">
+                <li>${error}</li>
+            </c:forEach>
+        </ul>
+    </div>
+</c:if>
+
 <div class="container">
     <h2>Edit your information</h2>
     <form class="was-validated" method="post">
