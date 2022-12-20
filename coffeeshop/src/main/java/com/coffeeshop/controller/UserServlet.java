@@ -1,6 +1,8 @@
 package com.coffeeshop.controller;
 
+import com.coffeeshop.model.Country;
 import com.coffeeshop.model.User;
+import com.coffeeshop.model.service.CountryDAO;
 import com.coffeeshop.model.service.UserDAO;
 
 import java.io.*;
@@ -15,13 +17,11 @@ import javax.servlet.annotation.*;
 public class UserServlet extends HttpServlet {
     private final UserDAO userDAO = new UserDAO();
     private List<User> userList;
+    private List<Country> countryList;
+    private CountryDAO countryDAO = new CountryDAO();
     private User user;
     private Set<String> errors;
     private String message;
-    private static int page;
-    private static int recordsPerPage;
-    private static String keyword;
-    private static String sort;
     private static final long serialVersionUID = 1L;
 
     @Override
@@ -51,9 +51,6 @@ public class UserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = getAction(req);
         switch (action) {
-//            case "login":
-//                login(req, resp);
-//                break;
             case "signUp":
                 signUp(req, resp);
                 break;
@@ -82,8 +79,10 @@ public class UserServlet extends HttpServlet {
         String fullName = req.getParameter("fullName");
         String phone = req.getParameter("phone");
         String email = req.getParameter("email");
-        String address = req.getParameter("address");
-        userDAO.update(new User(id, userName, passWord, fullName, phone, email, address));
+        int idCountry = Integer.parseInt(req.getParameter("idCountry"));
+        String image = req.getParameter("image");
+        String bio = req.getParameter("bio");
+        userDAO.update(new User(id, userName, passWord, fullName, phone, email, idCountry, image, bio));
         String msg = "Change your information success!";
         req.setAttribute("msg", msg);
         req.getRequestDispatcher("WEB-INF/index/mainJsp/edit.jsp").forward(req, resp);
@@ -92,15 +91,18 @@ public class UserServlet extends HttpServlet {
     private void showEditView(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int id = Integer.parseInt(req.getParameter("id"));
         user = userDAO.select(id);
+        countryList = countryDAO.selectAll();
+        req.setAttribute("countryList", countryList);
         req.setAttribute("user", user);
         req.getRequestDispatcher("WEB-INF/index/mainJsp/edit.jsp").forward(req, resp);
     }
 
     private void showUserManagerView(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        page = req.getParameter("page") == null ? 1 : Integer.parseInt(req.getParameter("page"));
-        recordsPerPage = req.getParameter("recordsPerPage") == null ? 5 : Integer.parseInt(req.getParameter("recordsPerPage"));
-        keyword = req.getParameter("keyword") == null ? "" : req.getParameter("keyword");
-        sort = req.getParameter("sort") == null ? "idDesc" : req.getParameter("sort");
+        int page = req.getParameter("page") == null ? 1 : Integer.parseInt(req.getParameter("page"));
+        int recordsPerPage = req.getParameter("recordsPerPage") == null ? 5 : Integer.parseInt(req.getParameter("recordsPerPage"));
+        String keyword = req.getParameter("keyword") == null ? "" : req.getParameter("keyword");
+        String sort = req.getParameter("sort") == null ? "idAsc" : req.getParameter("sort");
+        countryList = countryDAO.selectAll();
 
         switch (sort) {
             case "idDesc":
@@ -143,11 +145,12 @@ public class UserServlet extends HttpServlet {
                 userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, keyword, "address", "DESC");
                 break;
             default:
-                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, keyword, "id", "DESC");
+                userList = userDAO.paginationView((page - 1) * recordsPerPage, recordsPerPage, keyword, "id", "ASC");
                 break;
         }
         int noOfRecords = userDAO.getNoOfRecords();
         int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
+        req.setAttribute("countryList", countryList);
         req.setAttribute("keyword", keyword);
         req.setAttribute("userList", userList);
         req.setAttribute("noOfPages", noOfPages);
@@ -198,8 +201,10 @@ public class UserServlet extends HttpServlet {
         if (!passWord.equals(rePassWord)) {
             errors.add("Password does not match!");
         }
-        String address = req.getParameter("address");
-        user = new User(id, userName, passWord, fullName, phone, email, address);
+        int idCountry = Integer.parseInt(req.getParameter("idCountry"));
+        String image = req.getParameter("image");
+        String bio = req.getParameter("bio");
+        user = new User(id, userName, passWord, fullName, phone, email, idCountry, image, bio);
         userDAO.insert(user);
         if (errors.isEmpty()) {
             req.setAttribute("user", user);
@@ -214,27 +219,6 @@ public class UserServlet extends HttpServlet {
     private void showSignUpView(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("WEB-INF/index/mainJsp/signUpForm.jsp").forward(req, resp);
     }
-
-
-//    private void login(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        String userName = req.getParameter("userName");
-//        String passWord = req.getParameter("passWord");
-//        user = userDAO.returnLogin(userName, passWord);
-//        userList = userDAO.selectAll();
-//        if (user != null) {
-//            req.setAttribute("user", user);
-//            req.setAttribute("userList", userList);
-//            req.getRequestDispatcher("WEB-INF/index/mainJsp/userManager.jsp").forward(req, resp);
-//        } else {
-//            message = "Account not found!";
-//            req.setAttribute("message", message);
-//            req.getRequestDispatcher("WEB-INF/index/mainJsp/index.jsp").forward(req, resp);
-//        }
-//    }
-//
-//    protected void showLoginView(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        req.getRequestDispatcher("WEB-INF/index/mainJsp/index.jsp").forward(req, resp);
-//    }
 
     protected String getAction(HttpServletRequest req) {
         String action = req.getParameter("action");

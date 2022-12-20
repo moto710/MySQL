@@ -9,12 +9,12 @@ import java.util.List;
 
 public class UserDAO extends RootDAO implements IDAO<User> {
     private static final String SELECT_ALL_USERS = "SELECT * FROM `users`;";
-    private static final String INSERT_USERS = "INSERT INTO `users` VALUES (?, ?, ?, ?, ?, ?, ?);";
+    private static final String INSERT_USERS = "INSERT INTO `users` VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
     private static final String FIND_BY_ID = "SELECT * FROM users WHERE id = ?;";
     private static final String DELETE_USERS_BY_ID = "DELETE FROM `users` WHERE `id` = ?;";
-    private static final String UPDATE_USERS = "UPDATE users SET `userName` = ?, passWord = ?, fullName = ?, phone = ?, email = ?, address = ? WHERE `id` = ?;";
+    private static final String UPDATE_USERS = "UPDATE users SET `userName` = ?, passWord = ?, fullName = ?, phone = ?, email = ?, idCountry = ?, image = ?, bio = ? WHERE `id` = ?;";
     private static final String FIND_MAX_ID = "SELECT MAX(`id`) AS id FROM users;";
-    public final String PAGINATION = "SELECT SQL_CALC_FOUND_ROWS * FROM `users` WHERE `userName` LIKE ? OR `fullName` LIKE ? OR `address` LIKE ? OR `email` LIKE ? OR `phone` LIKE ? ORDER BY %s %s limit ?, ?;";
+    public final String PAGINATION = "SELECT SQL_CALC_FOUND_ROWS * FROM `users` WHERE `userName` LIKE ? OR `fullName` LIKE ? OR `email` LIKE ? OR `phone` LIKE ? OR `bio` LIKE ? ORDER BY %s %s limit ?, ?;";
 
     private User user;
     private List<User> userList;
@@ -32,7 +32,7 @@ public class UserDAO extends RootDAO implements IDAO<User> {
 
         String fmtPAGINATION = String.format(PAGINATION,orderBy, order);
         userList = new ArrayList<>();
-        try {
+        try { //SELECT SQL_CALC_FOUND_ROWS * FROM `users` WHERE `userName` LIKE ? OR `fullName` LIKE ? OR `email` LIKE ? OR `phone` LIKE ? OR `bio` LIKE ? ORDER BY %s %s limit ?, ?;
             preparedStatement = startConnect(fmtPAGINATION);
             preparedStatement.setString(1, "%" + keyword + "%");
             preparedStatement.setString(2, "%" + keyword + "%");
@@ -66,8 +66,10 @@ public class UserDAO extends RootDAO implements IDAO<User> {
         String fullName = rs.getString("fullName");
         String phone = rs.getString("phone");
         String email = rs.getString("email");
-        String address = rs.getString("address");
-        return new User(id, userName, passWord, fullName, phone, email, address);
+        int idCountry = rs.getInt("idCountry");
+        String image = rs.getString("image");
+        String bio = rs.getString("bio");
+        return new User(id, userName, passWord, fullName, phone, email, idCountry, image, bio);
     }
     public boolean checkLogin(String userName, String password) {
         userList = selectAll();
@@ -114,7 +116,9 @@ public class UserDAO extends RootDAO implements IDAO<User> {
             preparedStatement.setString(4, user.getFullName());
             preparedStatement.setString(5, user.getPhone());
             preparedStatement.setString(6, user.getEmail());
-            preparedStatement.setString(7, user.getAddress());
+            preparedStatement.setInt(7, user.getIdCountry());
+            preparedStatement.setString(8, user.getImage());
+            preparedStatement.setString(9, user.getBio());
             preparedStatement.executeUpdate();
             System.out.println(this.getClass() + " insert: " + preparedStatement);
             closeConnect();
@@ -135,8 +139,10 @@ public class UserDAO extends RootDAO implements IDAO<User> {
                 String fullName = rs.getString("fullName");
                 String phone = rs.getString("phone");
                 String email = rs.getString("email");
-                String address = rs.getString("address");
-                user = new User(id, userName, passWord, fullName, phone, email, address);
+                int idCountry = rs.getInt("idCountry");
+                String image = rs.getString("image");
+                String bio = rs.getString("bio");
+                user = new User(id, userName, passWord, fullName, phone, email, idCountry, image, bio);
             }
             System.out.println(this.getClass() + " select: " + preparedStatement);
             closeConnect();
@@ -153,14 +159,6 @@ public class UserDAO extends RootDAO implements IDAO<User> {
             preparedStatement = startConnect(SELECT_ALL_USERS);
             rs = preparedStatement.executeQuery();
             while (rs.next()) {
-//                int id = rs.getInt("id");
-//                String userName = rs.getString("userName");
-//                String passWord = rs.getString("passWord");
-//                String fullName = rs.getString("fullName");
-//                String phone = rs.getString("phone");
-//                String email = rs.getString("email");
-//                String address = rs.getString("address");
-
                 userList.add(getUserFromRS(rs));
             }
             System.out.println(this.getClass() + " selectAll: " + preparedStatement);
@@ -191,13 +189,15 @@ public class UserDAO extends RootDAO implements IDAO<User> {
         boolean rowUpdated;
         try {
             preparedStatement = startConnect(UPDATE_USERS);
-            preparedStatement.setInt(7, user.getId());
             preparedStatement.setString(1, user.getUserName());
             preparedStatement.setString(2, user.getPassWord());
             preparedStatement.setString(3, user.getFullName());
             preparedStatement.setString(4, user.getPhone());
             preparedStatement.setString(5, user.getEmail());
-            preparedStatement.setString(6, user.getAddress());
+            preparedStatement.setInt(6, user.getIdCountry());
+            preparedStatement.setString(7, user.getImage());
+            preparedStatement.setString(8, user.getBio());
+            preparedStatement.setInt(9, user.getId());
             rowUpdated = preparedStatement.executeUpdate() > 0;
             System.out.println(this.getClass() + " update: " + preparedStatement);
             closeConnect();

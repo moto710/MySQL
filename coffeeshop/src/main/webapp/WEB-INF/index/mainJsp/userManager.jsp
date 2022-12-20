@@ -7,6 +7,7 @@
     <jsp:include page="/WEB-INF/index/layout/head.jsp"></jsp:include>
     <style>
 
+
         .hidden {
             opacity: 0;
         }
@@ -36,7 +37,7 @@
     </script>
 </c:if>
 
-<div class="container">
+<div class="container-fluid">
     <div class="d-flex justify-content-between">
         <div class="col-4 d-flex">
             <h2>All Users</h2>
@@ -66,6 +67,7 @@
                 <th>
                     <a href="${pageContext.request.contextPath}/home?action=manager&sort=userNameAsc&keyword=${requestScope.keyword}&recordsPerPage=${requestScope.recordsPerPage}&currentPage=${requestScope.currentPage}"><i
                             class="fa fa-chevron-up"></i></a></th>
+                <th rowspan="2" colspan="2">Image</th>
                 <th rowspan="2">Full Name</th>
                 <th>
                     <a href="${pageContext.request.contextPath}/home?action=manager&sort=fullNameAsc&keyword=${requestScope.keyword}&recordsPerPage=${requestScope.recordsPerPage}&currentPage=${requestScope.currentPage}"><i
@@ -78,13 +80,13 @@
                 <th>
                     <a href="${pageContext.request.contextPath}/home?action=manager&sort=emailAsc&keyword=${requestScope.keyword}&recordsPerPage=${requestScope.recordsPerPage}&currentPage=${requestScope.currentPage}"><i
                             class="fa fa-chevron-up"></i></a></th>
-                <th rowspan="2">Address</th>
+                <th rowspan="2">Country</th>
                 <th>
                     <a href="${pageContext.request.contextPath}/home?action=manager&sort=addressAsc&keyword=${requestScope.keyword}&recordsPerPage=${requestScope.recordsPerPage}&currentPage=${requestScope.currentPage}"><i
                             class="fa fa-chevron-up"></i></a></th>
+                <th rowspan="2" colspan="2">Bio</th>
                 <th rowspan="2">Action</th>
             </tr>
-
 
             <tr>
                 <th>
@@ -117,10 +119,16 @@
                 <tr>
                     <td colspan="2">${user.getId()}</td>
                     <td colspan="2">${user.getUserName()}</td>
+                    <td colspan="2"><img src="${user.getImage()}" class="img-thumbnail zoom" width="150px" alt="No Image"></td>
                     <td colspan="2">${user.getFullName()}</td>
                     <td colspan="2">${user.getPhone()}</td>
                     <td colspan="2">${user.getEmail()}</td>
-                    <td colspan="2">${user.getAddress()}</td>
+                    <c:forEach items="${requestScope.countryList}" var="country">
+                        <c:if test="${country.getId() eq user.getIdCountry()}">
+                            <td colspan="2">${country.getName()}</td>
+                        </c:if>
+                    </c:forEach>
+                    <td colspan="2">${user.getBio()}</td>
                     <td>
                         <a href="${pageContext.request.contextPath}/home?action=edit&id=${user.getId()}"><i
                                 class="fa fa-edit"></i></a>

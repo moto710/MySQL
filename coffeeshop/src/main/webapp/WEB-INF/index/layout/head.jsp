@@ -28,3 +28,6 @@
 
 <!-- js sweet alert -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.15/dist/sweetalert2.all.min.js"></script>
+
+<!-- style.css -->
+<link href="${pageContext.request.contextPath}/coffee/css/style.css" rel="stylesheet">

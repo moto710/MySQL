@@ -59,6 +59,11 @@ body {
   background-color: #FFFBF2;
 }
 
+.zoom:hover {
+  -ms-transform: scale(1.5); /* IE 9 */
+  -webkit-transform: scale(1.5); /* Safari 3-8 */
+  transform: scale(2);
+}
 [tabindex="-1"]:focus:not(:focus-visible) {
   outline: 0 !important;
 }

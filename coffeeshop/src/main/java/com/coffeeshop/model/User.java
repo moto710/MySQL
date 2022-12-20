@@ -7,28 +7,50 @@ public class User {
     private String fullName;
     private String phone;
     private String email;
-    private String address;
+    private int idCountry;
+    private String image;
+    private String bio;
 
     public User() {
 
     }
 
-    public User(int id, String userName, String passWord, String fullName, String phone, String email, String address) {
+    public User(int id, String userName, String passWord, String fullName, String phone, String email, int idCountry,String image,String bio) {
         this.id = id;
         this.userName = userName;
         this.passWord = passWord;
         this.fullName = fullName;
         this.phone = phone;
         this.email = email;
-        this.address = address;
+        this.idCountry = idCountry;
+        this.image = image;
+        this.bio = bio;
     }
-    public User(String userName, String passWord, String fullName, String phone, String email, String address) {
+    public User(String userName, String passWord, String fullName, String phone, String email, int idCountry, String image, String bio) {
         this.userName = userName;
         this.passWord = passWord;
         this.fullName = fullName;
         this.phone = phone;
         this.email = email;
-        this.address = address;
+        this.idCountry = idCountry;
+        this.image = image;
+        this.bio = bio;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public int getId() {
@@ -79,11 +101,11 @@ public class User {
         this.email = email;
     }
 
-    public String getAddress() {
-        return address;
+    public int getIdCountry() {
+        return idCountry;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setIdCountry(int idCountry) {
+        this.idCountry = idCountry;
     }
 }

@@ -85,6 +85,15 @@
             <div class="valid-feedback">Valid.</div>
             <div class="invalid-feedback">Please fill out this field.</div>
         </div>
+        <div class="form-group">
+            <label for="image">Your Image:</label>
+            <input type="text" class="form-control" id="image" placeholder="Your Image Link (Optional)" name="image"
+                   value="${requestScope.user.getImage()}">
+        </div>
+        <div class="form-group">
+            <label for="bio">Your Short Bio (Optional):</label>
+            <textarea class="form-control" id="bio"name="bio" value="${requestScope.user.getBio()}" rows="3"></textarea>
+        </div>
         <div class="form-group form-check">
             <label class="form-check-label">
                 <input class="form-check-input" type="checkbox" name="remember" required> Are you human?
