@@ -5,28 +5,7 @@
 <head>
     <jsp:include page="/WEB-INF/index/layout/head.jsp"></jsp:include>
     <style>
-        .dropbtn {
-            background-color: #4CAF50;
-            color: white;
-            padding: 16px;
-            font-size: 16px;
-            border: none;
-            cursor: pointer;
-        }
 
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-            z-index: 1;
-        }
 
         .dropdown-content a {
             color: black;
@@ -57,9 +36,9 @@
 <jsp:include page="/WEB-INF/index/layout/carousel.jsp"></jsp:include>
 <!-- Carousel End -->
 
-<c:if test="${requestScope.msg ne null}">
+<c:if test="${requestScope.message ne null}">
     <script>
-        let msg = '<%= ((String) request.getAttribute("msg")) %>';
+        let msg = '<%= ((String) request.getAttribute("message")) %>';
         Swal.fire({
             title: msg,
             showClass: {
@@ -73,7 +52,7 @@
 </c:if>
 
 <c:if test="${requestScope.errors ne null}">
-    <div class="alert alert-danger" role="alert">
+    <div class="alert alert-danger container" role="alert">
         <ul>
             <c:forEach items="${requestScope.errors}" var="error">
                 <li>${error}</li>
@@ -81,6 +60,15 @@
         </ul>
     </div>
 </c:if>
+<%--<c:if test="${requestScope.errors ne null}">--%>
+<%--    <div class="alert alert-danger" role="alert">--%>
+<%--        <ul>--%>
+<%--            <c:forEach items="${requestScope.errors}" var="error">--%>
+<%--                <li>${error}</li>--%>
+<%--            </c:forEach>--%>
+<%--        </ul>--%>
+<%--    </div>--%>
+<%--</c:if>--%>
 
 <div class="container">
     <h2>Edit your information</h2>
@@ -90,78 +78,84 @@
         </div>
         <div class="form-group">
             <label for="userName">Username:</label>
-            <input type="text" class="form-control" id="userName" value="${requestScope.user.getUserName()}"
+            <input type="text" class="form-control" id="userName" value="${requestScope.user.getUserName()}${requestScope.userName}"
                    name="userName" required>
             <div class="valid-feedback">Valid.</div>
             <div class="invalid-feedback">Please fill out this field.</div>
         </div>
         <div class="form-group">
             <label for="email">Email:</label>
-            <input type="text" class="form-control" id="email" value="${requestScope.user.getEmail()}" name="email"
+            <input type="text" class="form-control" id="email" value="${requestScope.user.getEmail()}${requestScope.email}" name="email"
                    required>
             <div class="valid-feedback">Valid.</div>
             <div class="invalid-feedback">Please fill out this field.</div>
         </div>
         <div class="form-group">
             <label for="passWord">Password:</label>
-            <input type="password" class="form-control" id="passWord" value="${requestScope.user.getPassWord()}"
+            <input type="password" class="form-control" id="passWord" value="${requestScope.user.getPassWord()}${requestScope.passWord}"
                    name="passWord" required>
             <div class="valid-feedback">Valid.</div>
             <div class="invalid-feedback">Please fill out this field.</div>
         </div>
         <div class="form-group">
             <label for="rePassWord">Re-Enter Password:</label>
-            <input type="password" class="form-control" id="rePassWord" value="${requestScope.user.getPassWord()}"
+            <input type="password" class="form-control" id="rePassWord" value="${requestScope.user.getPassWord()}${requestScope.rePassWord}"
                    name="rePassWord" required>
             <div class="valid-feedback">Valid.</div>
             <div class="invalid-feedback">Please fill out this field.</div>
         </div>
         <div class="form-group">
             <label for="fullName">Full Name:</label>
-            <input type="text" class="form-control" id="fullName" value="${requestScope.user.getFullName()}"
+            <input type="text" class="form-control" id="fullName" value="${requestScope.user.getFullName()}${requestScope.fullName}"
                    name="fullName" required>
             <div class="valid-feedback">Valid.</div>
             <div class="invalid-feedback">Please fill out this field.</div>
         </div>
         <div class="form-group">
             <label for="phone">Phone Number:</label>
-            <input type="text" class="form-control" id="phone" value="${requestScope.user.getPhone()}" name="phone"
+            <input type="text" class="form-control" id="phone" value="${requestScope.user.getPhone()}${requestScope.phone}" name="phone"
                    required>
             <div class="valid-feedback">Valid.</div>
             <div class="invalid-feedback">Please fill out this field.</div>
         </div>
+
+
+        <div>
+            <label for="idCountry">Select Your Country:</label>
+            <select id="idCountry" name="idCountry">
+                <c:forEach items="${requestScope.countryList}" var="country">
+                    <option value="${country.getId()}"<c:if
+                            test="${country.getId() eq requestScope.user.getIdCountry() || requestScope.idCountry eq country.getId()}">
+                        selected
+                    </c:if>
+                    >${country.getName()}</option>
+                </c:forEach>
+            </select>
+
+            <div class="valid-feedback">Valid.</div>
+            <div class="invalid-feedback">Please fill out this field.</div>
+        </div>
         <div class="form-group">
-            <div class="form-group">
-                <label for="address">Address:</label>
-                <input type="text" class="form-control" id="address" value="${requestScope.user.getAddress()}"
-                       name="address" required>
-                <div class="invalid-feedback">Please fill out this field.</div>
+            <label for="image">Your Image:</label>
+            <input type="text" class="form-control" id="image" placeholder="Your Image Link (Optional)"
+                   name="image"
+                   value="${requestScope.user.getImage()}${requestScope.image}">
+        </div>
+        <div class="form-group">
+            <label for="bio">Your Short Bio (Optional):</label>
+            <textarea class="form-control" id="bio" name="bio" value="${requestScope.user.getBio()}${requestScope.bio}"
+                      rows="3"></textarea>
+        </div>
 
-
-                <%--            <input type="text" class="form-control" id="getIdCountry" value="${requestScope.user.getIdCountry()}" name="getIdCountry" required>--%>
+        <div class="form-group form-check">
+            <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" name="remember" required> Are you sure to edit your
+                information?
                 <div class="valid-feedback">Valid.</div>
-                <div class="invalid-feedback">Please fill out this field.</div>
-                <div class="form-group">
-                    <label for="image">Your Image:</label>
-                    <input type="text" class="form-control" id="image" placeholder="Your Image Link (Optional)"
-                           name="image"
-                           value="${requestScope.user.getImage()}">
-                </div>
-                <div class="form-group">
-                    <label for="bio">Your Short Bio (Optional):</label>
-                    <textarea class="form-control" id="bio" name="bio" value="${requestScope.user.getBio()}"
-                              rows="3"></textarea>
-                </div>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" type="checkbox" name="remember" required> Are you sure to edit your
-                    information?
-                    <div class="valid-feedback">Valid.</div>
-                    <div class="invalid-feedback">Check this captcha to confirm!</div>
-                </label>
-            </div>
-            <button type="submit" class="btn btn-primary">OK</button>
+                <div class="invalid-feedback">Check this captcha to confirm!</div>
+            </label>
+        </div>
+        <button type="submit" class="btn btn-primary">OK</button>
     </form>
 </div>
 

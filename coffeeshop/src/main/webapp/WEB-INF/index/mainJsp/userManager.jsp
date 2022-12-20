@@ -5,13 +5,6 @@
 <html>
 <head>
     <jsp:include page="/WEB-INF/index/layout/head.jsp"></jsp:include>
-    <style>
-
-
-        .hidden {
-            opacity: 0;
-        }
-    </style>
 </head>
 <body>
 <!-- Navbar Start -->
@@ -27,6 +20,21 @@
         let name = '<%= ((User) request.getAttribute("user")).getFullName() %>';
         Swal.fire({
             title: 'welcome back ' + name,
+            showClass: {
+                popup: 'animate__animated animate__fadeInDown'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__fadeOutUp'
+            }
+        })
+    </script>
+</c:if>
+
+<c:if test="${requestScope.message ne null}">
+    <script>
+        let msg = '<c:out value="${requestScope.message}"/>';
+        Swal.fire({
+            title: msg,
             showClass: {
                 popup: 'animate__animated animate__fadeInDown'
             },
@@ -142,7 +150,7 @@
         </table>
         <div class="d-flex justify-content-between">
             <ul class="pagination">
-                <li class="page-item" disabled="disabled">
+                <li class="page-item">
                     <a class="page-link"
                        href="${pageContext.request.contextPath}/home?action=manager&page=${requestScope.currentPage - 1}">previous</a>
                 </li>

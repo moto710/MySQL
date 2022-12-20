@@ -4,6 +4,7 @@ import com.coffeeshop.model.Country;
 import com.coffeeshop.model.User;
 import com.coffeeshop.model.service.CountryDAO;
 import com.coffeeshop.model.service.UserDAO;
+import com.coffeeshop.model.utils.ValidateUser;
 
 import java.io.*;
 import java.util.HashSet;
@@ -18,7 +19,7 @@ public class UserServlet extends HttpServlet {
     private final UserDAO userDAO = new UserDAO();
     private List<User> userList;
     private List<Country> countryList;
-    private CountryDAO countryDAO = new CountryDAO();
+    private final CountryDAO countryDAO = new CountryDAO();
     private User user;
     private Set<String> errors;
     private String message;
@@ -81,10 +82,17 @@ public class UserServlet extends HttpServlet {
         String email = req.getParameter("email");
         int idCountry = Integer.parseInt(req.getParameter("idCountry"));
         String image = req.getParameter("image");
+        if (image.equals("")) {
+            image = null;
+        }
         String bio = req.getParameter("bio");
+        if (bio.equals("")) {
+            bio = null;
+        }
         userDAO.update(new User(id, userName, passWord, fullName, phone, email, idCountry, image, bio));
-        String msg = "Change your information success!";
-        req.setAttribute("msg", msg);
+        message = "Change your information success!";
+        req.setAttribute("message", message);
+//        resp.sendRedirect("/home");
         req.getRequestDispatcher("WEB-INF/index/mainJsp/edit.jsp").forward(req, resp);
     }
 
@@ -180,6 +188,7 @@ public class UserServlet extends HttpServlet {
     private void signUp(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         errors = new HashSet<>();
         userList = userDAO.selectAll();
+        countryList = countryDAO.selectAll();
         int id = userDAO.findBiggestId() + 1;
         String userName = req.getParameter("userName");
         for (User u : userList) {
@@ -188,7 +197,13 @@ public class UserServlet extends HttpServlet {
                 break;
             }
         }
+        if (!ValidateUser.isUserNameValid(userName)) {
+            errors.add("Username must be 8-20 characters long, accept special character!");
+        }
         String passWord = req.getParameter("passWord");
+        if (!ValidateUser.isPasswordValid(passWord)) {
+            errors.add("Password must be 8-20 characters long, accept special character, must include both number and character!");
+        }
         String fullName = req.getParameter("fullName");
         String phone = req.getParameter("phone");
         for (User u : userList) {
@@ -196,27 +211,57 @@ public class UserServlet extends HttpServlet {
                 errors.add("Your phone had been registered! Please choose another one!");
             }
         }
+        if (!ValidateUser.isPhoneValid(phone)) {
+            errors.add("Wrong phone number! Example: 0909298966");
+        }
         String email = req.getParameter("email");
+        if (!ValidateUser.isEmailValid(email)) {
+            errors.add("Wrong syntax~ Email should be: abc@xyz.com");
+        }
+        for (User u : userList) {
+            if (u.getEmail().equals(email)) {
+                errors.add("Your email had been registered! Please choose another one!");
+            }
+        }
+        for (User u : userList) {
+            if (u.getEmail().equals(email)) {
+                errors.add("Your email had been registered! Please choose another one!");
+            }
+        }
         String rePassWord = req.getParameter("rePassWord");
         if (!passWord.equals(rePassWord)) {
             errors.add("Password does not match!");
         }
         int idCountry = Integer.parseInt(req.getParameter("idCountry"));
         String image = req.getParameter("image");
+        if (!ValidateUser.isLinkValid(image) && !image.equals("")) {
+            errors.add("Your link is not valid!");
+        }
         String bio = req.getParameter("bio");
-        user = new User(id, userName, passWord, fullName, phone, email, idCountry, image, bio);
-        userDAO.insert(user);
         if (errors.isEmpty()) {
+            user = new User(id, userName, passWord, fullName, phone, email, idCountry, image, bio);
+            userDAO.insert(user);
             req.setAttribute("user", user);
             req.getRequestDispatcher("WEB-INF/index/mainJsp/signUpForm.jsp").forward(req, resp);
         } else {
+            req.setAttribute("userName", userName);
+            req.setAttribute("passWord", passWord);
+            req.setAttribute("rePassWord", rePassWord);
+            req.setAttribute("fullName", fullName);
+            req.setAttribute("phone", phone);
+            req.setAttribute("email", email);
+            req.setAttribute("idCountry", idCountry);
+            req.setAttribute("image", image);
+            req.setAttribute("bio", bio);
             req.setAttribute("errors", errors);
-            req.setAttribute("user", user);
+            req.setAttribute("countryList", countryList);
             req.getRequestDispatcher("WEB-INF/index/mainJsp/edit.jsp").forward(req, resp);
         }
     }
 
     private void showSignUpView(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        countryList = countryDAO.selectAll();
+        req.setAttribute("countryList", countryList);
         req.getRequestDispatcher("WEB-INF/index/mainJsp/signUpForm.jsp").forward(req, resp);
     }
 

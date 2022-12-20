@@ -78,13 +78,20 @@
             <div class="valid-feedback">Valid.</div>
             <div class="invalid-feedback">Please fill out this field.</div>
         </div>
-        <div class="form-group">
-            <label for="address">Address:</label>
-            <input type="text" class="form-control" id="address" placeholder="Choose Address" name="address" required
-                   value="${requestScope.user.getAddress()}">
+
+        <div>
+            <label for="idCountry">Select Your Country:</label>
+            <select id="idCountry" name="idCountry">
+                <c:forEach items="${requestScope.countryList}" var="country">
+                    <option value="${country.getId()}">${country.getName()}</option>
+                </c:forEach>
+                <a><option >Don't have your country??? Add now!</option></a>
+            </select>
+
             <div class="valid-feedback">Valid.</div>
             <div class="invalid-feedback">Please fill out this field.</div>
         </div>
+
         <div class="form-group">
             <label for="image">Your Image:</label>
             <input type="text" class="form-control" id="image" placeholder="Your Image Link (Optional)" name="image"
