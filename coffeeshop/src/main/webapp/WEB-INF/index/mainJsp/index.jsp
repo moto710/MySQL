@@ -19,10 +19,10 @@
 <jsp:include page="/WEB-INF/index/layout/about.jsp"></jsp:include>
 <!-- About End -->
 
-<c:if test="${requestScope.message ne null}">
-    <h1>${requestScope.message}</h1>
+<c:if test="${requestScope.messageLogin ne null}">
+    <h1>${requestScope.messageLogin}</h1>
     <script>
-        let message = '<c:out value="${requestScope.message}" />';
+        let message = '<c:out value="${requestScope.messageLogin}" />';
         Swal.fire({
             title: message,
             showClass: {

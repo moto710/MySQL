@@ -6,29 +6,6 @@
 <head>
     <jsp:include page="/WEB-INF/index/layout/head.jsp"></jsp:include>
     <style>
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            min-width: 160px;
-            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-            padding: 12px 16px;
-            z-index: 1;
-        }
-
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-
-        .list {
-            list-style: none;
-            display: inline;
-        }
 
         .hidden {
             opacity: 0;
@@ -81,141 +58,69 @@
         <table class="table table-striped">
             <thead>
             <tr>
+                <th rowspan="2">ID</th>
                 <th>
-                    <ul class="list">
-                        <li>ID</li>
-                        <li>
-                            <ul class="list">
-                                <li>
-                                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=idAsc&keyword=${requestScope.keyword}"><i
-                                            class="fa fa-chevron-up"></i></a></li>
-                                <li>
-                                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=idDesc&keyword=${requestScope.keyword}"><i
-                                            class="fa fa-chevron-down"></i></a></li>
-                            </ul>
-                        </li>
-                    </ul>
+                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=idAsc&keyword=${requestScope.keyword}&recordsPerPage=${requestScope.recordsPerPage}&currentPage=${requestScope.currentPage}"><i
+                            class="fa fa-chevron-up"></i></a></th>
+                <th rowspan="2">User Name</th>
+                <th>
+                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=userNameAsc&keyword=${requestScope.keyword}&recordsPerPage=${requestScope.recordsPerPage}&currentPage=${requestScope.currentPage}"><i
+                            class="fa fa-chevron-up"></i></a></th>
+                <th rowspan="2">Full Name</th>
+                <th>
+                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=fullNameAsc&keyword=${requestScope.keyword}&recordsPerPage=${requestScope.recordsPerPage}&currentPage=${requestScope.currentPage}"><i
+                            class="fa fa-chevron-up"></i></a></th>
+                <th rowspan="2">Phone Number</th>
+                <th>
+                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=phoneAsc&keyword=${requestScope.keyword}&recordsPerPage=${requestScope.recordsPerPage}&currentPage=${requestScope.currentPage}"><i
+                            class="fa fa-chevron-up"></i></a></th>
+                <th rowspan="2">Email</th>
+                <th>
+                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=emailAsc&keyword=${requestScope.keyword}&recordsPerPage=${requestScope.recordsPerPage}&currentPage=${requestScope.currentPage}"><i
+                            class="fa fa-chevron-up"></i></a></th>
+                <th rowspan="2">Address</th>
+                <th>
+                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=addressAsc&keyword=${requestScope.keyword}&recordsPerPage=${requestScope.recordsPerPage}&currentPage=${requestScope.currentPage}"><i
+                            class="fa fa-chevron-up"></i></a></th>
+                <th rowspan="2">Action</th>
+            </tr>
 
+
+            <tr>
+                <th>
+                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=idDesc&keyword=${requestScope.keyword}&recordsPerPage=${requestScope.recordsPerPage}&currentPage=${requestScope.currentPage}"><i
+                            class="fa fa-chevron-down"></i></a></th>
+                <th>
+                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=userNameDesc&keyword=${requestScope.keyword}&recordsPerPage=${requestScope.recordsPerPage}&currentPage=${requestScope.currentPage}"><i
+                            class="fa fa-chevron-down"></i></a>
                 </th>
                 <th>
-                    <ul class="list">
-                        <li>User Name</li>
-                        <li>
-                            <ul class="list">
-                                <li>
-                                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=userNameAsc&keyword=${requestScope.keyword}"><i
-                                            class="fa fa-chevron-up"></i></a></li>
-                                <li>
-                                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=userNameDesc&keyword=${requestScope.keyword}"><i
-                                            class="fa fa-chevron-down"></i></a></li>
-                            </ul>
-                        </li>
-                    </ul>
-
+                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=fullNameDesc&keyword=${requestScope.keyword}&recordsPerPage=${requestScope.recordsPerPage}&currentPage=${requestScope.currentPage}"><i
+                            class="fa fa-chevron-down"></i></a>
                 </th>
                 <th>
-                    <ul class="list">
-                        <li>Password</li>
-                        <li>
-                            <ul class="list">
-                                <li>
-                                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=passWordAsc&keyword=${requestScope.keyword}"><i
-                                            class="fa fa-chevron-up"></i></a></li>
-                                <li>
-                                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=passWordDesc&keyword=${requestScope.keyword}"><i
-                                            class="fa fa-chevron-down"></i></a></li>
-                            </ul>
-                        </li>
-                    </ul>
-
+                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=phoneDesc&keyword=${requestScope.keyword}&recordsPerPage=${requestScope.recordsPerPage}&currentPage=${requestScope.currentPage}"><i
+                            class="fa fa-chevron-down"></i></a>
                 </th>
                 <th>
-                    <ul class="list">
-                        <li>Full Name</li>
-                        <li>
-                            <ul class="list">
-                                <li>
-                                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=fullNameAsc&keyword=${requestScope.keyword}"><i
-                                            class="fa fa-chevron-up"></i></a></li>
-                                <li>
-                                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=fullNameDesc&keyword=${requestScope.keyword}"><i
-                                            class="fa fa-chevron-down"></i></a></li>
-                            </ul>
-                        </li>
-                    </ul>
-
+                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=emailDesc&keyword=${requestScope.keyword}&recordsPerPage=${requestScope.recordsPerPage}&currentPage=${requestScope.currentPage}"><i
+                            class="fa fa-chevron-down"></i></a>
                 </th>
                 <th>
-                    <ul class="list">
-                        <li>Phone Number</li>
-                        <li>
-                            <ul class="list">
-                                <li>
-                                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=phoneAsc&keyword=${requestScope.keyword}"><i
-                                            class="fa fa-chevron-up"></i></a></li>
-                                <li>
-                                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=phoneDesc&keyword=${requestScope.keyword}"><i
-                                            class="fa fa-chevron-down"></i></a></li>
-                            </ul>
-                        </li>
-                    </ul>
-
-                </th>
-                <th>
-                    <ul class="list">
-                        <li>Email</li>
-                        <li>
-                            <ul class="list">
-                                <li>
-                                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=emailAsc&keyword=${requestScope.keyword}"><i
-                                            class="fa fa-chevron-up"></i></a></li>
-                                <li>
-                                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=emailDesc&keyword=${requestScope.keyword}"><i
-                                            class="fa fa-chevron-down"></i></a></li>
-                            </ul>
-                        </li>
-                    </ul>
-
-                </th>
-                <th>
-                    <ul class="list">
-                        <li>Address</li>
-                        <li>
-                            <ul class="list">
-                                <li>
-                                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=addressAsc&keyword=${requestScope.keyword}"><i
-                                            class="fa fa-chevron-up"></i></a></li>
-                                <li>
-                                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=addressDesc&keyword=${requestScope.keyword}"><i
-                                            class="fa fa-chevron-down"></i></a></li>
-                            </ul>
-                        </li>
-                    </ul>
-
-                </th>
-                <th>
-                    <ul class="list">
-                        <li>Action</li>
-                        <li class="hidden">
-                            <ul class="list">
-                                <li><a><i class="fa fa-chevron-up"></i></a></li>
-                                <li><a><i class="fa fa-chevron-down"></i></a></li>
-                            </ul>
-                        </li>
-                    </ul>
+                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=addressDesc&keyword=${requestScope.keyword}&recordsPerPage=${requestScope.recordsPerPage}&currentPage=${requestScope.currentPage}"><i
+                            class="fa fa-chevron-down"></i></a>
                 </th>
             </tr>
             </thead>
             <tbody>
             <c:forEach items="${requestScope.userList}" var="user">
                 <tr>
-                    <td>${user.getId()}</td>
-                    <td>${user.getUserName()}</td>
-                    <td>${user.getPassWord()}</td>
-                    <td>${user.getFullName()}</td>
-                    <td>${user.getPhone()}</td>
-                    <td>${user.getEmail()}</td>
-                    <td>${user.getAddress()}</td>
+                    <td colspan="2">${user.getId()}</td>
+                    <td colspan="2">${user.getUserName()}</td>
+                    <td colspan="2">${user.getFullName()}</td>
+                    <td colspan="2">${user.getPhone()}</td>
+                    <td colspan="2">${user.getEmail()}</td>
+                    <td colspan="2">${user.getAddress()}</td>
                     <td>
                         <a href="${pageContext.request.contextPath}/home?action=edit&id=${user.getId()}"><i
                                 class="fa fa-edit"></i></a>
@@ -229,7 +134,7 @@
         </table>
         <div class="d-flex justify-content-between">
             <ul class="pagination">
-                <li class="page-item">
+                <li class="page-item" disabled="disabled">
                     <a class="page-link"
                        href="${pageContext.request.contextPath}/home?action=manager&page=${requestScope.currentPage - 1}">previous</a>
                 </li>
@@ -245,7 +150,9 @@
                 </li>
 
             </ul>
+
             <ul class="pagination justify-content-end">
+                <li class="page-item page-link">Show number of records:</li>
                 <li class="page-item"><a class="page-link"
                                          href="${pageContext.request.contextPath}/home?action=manager&recordsPerPage=5">5</a>
                 </li>
@@ -279,6 +186,7 @@
     for (var i = 0, l = elems.length; i < l; i++) {
         elems[i].addEventListener('click', confirmIt, false);
     }
+
 </script>
 
 </body>

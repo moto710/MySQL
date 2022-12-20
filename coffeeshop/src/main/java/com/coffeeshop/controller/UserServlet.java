@@ -34,9 +34,6 @@ public class UserServlet extends HttpServlet {
             case "forgotPW":
                 showForgotPWView(req, resp);
                 break;
-            case "manager":
-                showUserManagerView(req, resp);
-                break;
             case "edit":
                 showEditView(req, resp);
                 break;
@@ -44,7 +41,7 @@ public class UserServlet extends HttpServlet {
                 showRemoveView(req, resp);
                 break;
             default:
-                showLoginView(req, resp);
+                showUserManagerView(req, resp);
                 break;
         }
     }
@@ -54,9 +51,9 @@ public class UserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = getAction(req);
         switch (action) {
-            case "login":
-                login(req, resp);
-                break;
+//            case "login":
+//                login(req, resp);
+//                break;
             case "signUp":
                 signUp(req, resp);
                 break;
@@ -66,9 +63,9 @@ public class UserServlet extends HttpServlet {
             case "edit":
                 editUser(req, resp);
                 break;
-            default:
-                showLoginView(req, resp);
-                break;
+//            default:
+//                showLoginView(req, resp);
+//                break;
         }
     }
 
@@ -155,6 +152,8 @@ public class UserServlet extends HttpServlet {
         req.setAttribute("userList", userList);
         req.setAttribute("noOfPages", noOfPages);
         req.setAttribute("currentPage", page);
+        req.setAttribute("sort", sort);
+        req.setAttribute("recordsPerPage", recordsPerPage);
         req.getRequestDispatcher("WEB-INF/index/mainJsp/userManager.jsp").forward(req, resp);
     }
 
@@ -217,25 +216,25 @@ public class UserServlet extends HttpServlet {
     }
 
 
-    private void login(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String userName = req.getParameter("userName");
-        String passWord = req.getParameter("passWord");
-        user = userDAO.returnLogin(userName, passWord);
-        userList = userDAO.selectAll();
-        if (user != null) {
-            req.setAttribute("user", user);
-            req.setAttribute("userList", userList);
-            req.getRequestDispatcher("WEB-INF/index/mainJsp/userManager.jsp").forward(req, resp);
-        } else {
-            message = "Account not found!";
-            req.setAttribute("message", message);
-            req.getRequestDispatcher("WEB-INF/index/mainJsp/index.jsp").forward(req, resp);
-        }
-    }
-
-    protected void showLoginView(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("WEB-INF/index/mainJsp/index.jsp").forward(req, resp);
-    }
+//    private void login(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        String userName = req.getParameter("userName");
+//        String passWord = req.getParameter("passWord");
+//        user = userDAO.returnLogin(userName, passWord);
+//        userList = userDAO.selectAll();
+//        if (user != null) {
+//            req.setAttribute("user", user);
+//            req.setAttribute("userList", userList);
+//            req.getRequestDispatcher("WEB-INF/index/mainJsp/userManager.jsp").forward(req, resp);
+//        } else {
+//            message = "Account not found!";
+//            req.setAttribute("message", message);
+//            req.getRequestDispatcher("WEB-INF/index/mainJsp/index.jsp").forward(req, resp);
+//        }
+//    }
+//
+//    protected void showLoginView(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        req.getRequestDispatcher("WEB-INF/index/mainJsp/index.jsp").forward(req, resp);
+//    }
 
     protected String getAction(HttpServletRequest req) {
         String action = req.getParameter("action");
