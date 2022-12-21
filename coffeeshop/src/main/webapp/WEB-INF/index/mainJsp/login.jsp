@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Login</title>
@@ -6,12 +7,24 @@
 </head>
 <body>
 
+<c:if test="${requestScope.messageLogin}">
+    <script>
+        let name = '<c:out value="${requestScope.messageLogin}"/>';
+        Swal.fire({
+            title: name,
+            showClass: {
+                popup: 'animate__animated animate__fadeInDown'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__fadeOutUp'
+            }
+        })
+    </script>
+</c:if>
+
 <form class="modal-content animate" method="post">
     <div class="imgcontainer">
         <a href="${pageContext.request.contextPath}/home"><i class="fa fa-times close"></i></a>
-
-<%--                        <span onclick="document.getElementById('id01').style.display='none'" class="close"--%>
-<%--                              title="Close Modal">&times;</span>--%>
         <img src="${pageContext.request.contextPath}/coffee/img/img_avatar2.png" alt="Avatar"
              class="avatar">
     </div>

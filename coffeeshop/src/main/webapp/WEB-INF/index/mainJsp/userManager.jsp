@@ -5,6 +5,13 @@
 <html>
 <head>
     <jsp:include page="/WEB-INF/index/layout/head.jsp"></jsp:include>
+    <style>
+
+        .table thead th {
+            border: none;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
 <!-- Navbar Start -->
@@ -15,9 +22,9 @@
 <jsp:include page="/WEB-INF/index/layout/carousel.jsp"></jsp:include>
 <!-- Carousel End -->
 
-<c:if test="${requestScope.user ne null}">
+<c:if test="${sessionScope.userName ne null}">
     <script>
-        let name = '<%= ((User) request.getAttribute("user")).getFullName() %>';
+        let name = '${sessionScope.userName}';
         Swal.fire({
             title: 'welcome back ' + name,
             showClass: {
@@ -64,11 +71,11 @@
 
     </div>
     <form>
-        <table class="table table-striped">
+        <table class="table table-striped" style="border-top: 1px solid rgb(186,192,195)">
             <thead>
             <tr>
                 <th rowspan="2">ID</th>
-                <th style="border: none">
+                <th>
                     <a href="${pageContext.request.contextPath}/home?action=manager&sort=idAsc&keyword=${requestScope.keyword}&recordsPerPage=${requestScope.recordsPerPage}&page=${requestScope.page}"><i
                             class="fa fa-chevron-up"></i></a></th>
                 <th rowspan="2">User Name</th>
@@ -127,7 +134,8 @@
                 <tr>
                     <td colspan="2">${user.getId()}</td>
                     <td colspan="2">${user.getUserName()}</td>
-                    <td colspan="2"><img src="${user.getImage()}" class="img-thumbnail zoom" width="150px" alt="No Image"></td>
+                    <td colspan="2"><img src="${user.getImage()}" class="img-thumbnail zoom" width="150px"
+                                         alt="No Image"></td>
                     <td colspan="2">${user.getFullName()}</td>
                     <td colspan="2">${user.getPhone()}</td>
                     <td colspan="2">${user.getEmail()}</td>
@@ -152,17 +160,17 @@
             <ul class="pagination">
                 <li class="page-item">
                     <a class="page-link"
-                       href="${pageContext.request.contextPath}/home?action=manager&page=${requestScope.page - 1}&recordsPerPage=${requestScope.recordsPerPage}">previous</a>
+                       href="${pageContext.request.contextPath}/home?action=manager&page=${requestScope.page - 1}&recordsPerPage=${requestScope.recordsPerPage}&keyword=${requestScope.keyword}">previous</a>
                 </li>
                 <c:forEach begin="1" end="${requestScope.noOfPages}" var="i">
                     <li class="page-item">
                         <a class="page-link"
-                           href="${pageContext.request.contextPath}/home?action=manager&page=${i}&recordsPerPage=${requestScope.recordsPerPage}">${i}</a>
+                           href="${pageContext.request.contextPath}/home?action=manager&page=${i}&recordsPerPage=${requestScope.recordsPerPage}&keyword=${requestScope.keyword}">${i}</a>
                     </li>
                 </c:forEach>
                 <li class="page-item">
                     <a class="page-link"
-                       href="${pageContext.request.contextPath}/home?action=manager&page=${requestScope.page + 1}&recordsPerPage=${requestScope.recordsPerPage}">Next</a>
+                       href="${pageContext.request.contextPath}/home?action=manager&page=${requestScope.page + 1}&recordsPerPage=${requestScope.recordsPerPage}&keyword=${requestScope.keyword}">Next</a>
                 </li>
 
             </ul>
@@ -170,16 +178,16 @@
             <ul class="pagination justify-content-end">
                 <li class="page-item page-link">Show number of records:</li>
                 <li class="page-item"><a class="page-link"
-                                         href="${pageContext.request.contextPath}/home?action=manager&recordsPerPage=5&page=${requestScope.page}">5</a>
+                                         href="${pageContext.request.contextPath}/home?action=manager&recordsPerPage=5&page=${requestScope.page}&keyword=${requestScope.keyword}">5</a>
                 </li>
                 <li class="page-item"><a class="page-link"
-                                         href="${pageContext.request.contextPath}/home?action=manager&recordsPerPage=10&page=${requestScope.page}">10</a>
+                                         href="${pageContext.request.contextPath}/home?action=manager&recordsPerPage=10&page=${requestScope.page}&keyword=${requestScope.keyword}">10</a>
                 </li>
                 <li class="page-item"><a class="page-link"
-                                         href="${pageContext.request.contextPath}/home?action=manager&recordsPerPage=15&page=${requestScope.page}">15</a>
+                                         href="${pageContext.request.contextPath}/home?action=manager&recordsPerPage=15&page=${requestScope.page}&keyword=${requestScope.keyword}">15</a>
                 </li>
                 <li class="page-item"><a class="page-link"
-                                         href="${pageContext.request.contextPath}/home?action=manager&recordsPerPage=50&page=${requestScope.page}">50</a>
+                                         href="${pageContext.request.contextPath}/home?action=manager&recordsPerPage=50&page=${requestScope.page}&keyword=${requestScope.keyword}">50</a>
                 </li>
             </ul>
         </div>

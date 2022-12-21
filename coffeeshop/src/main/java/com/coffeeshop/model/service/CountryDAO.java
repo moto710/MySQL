@@ -1,7 +1,6 @@
 package com.coffeeshop.model.service;
 
 import com.coffeeshop.model.Country;
-import com.coffeeshop.model.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,7 +14,20 @@ public class CountryDAO extends RootDAO implements IDAO<Country> {
     private static final String SELECT_ALL_COUNTRIES = "SELECT * FROM `country`;";
     private static final String FIND_BY_ID = "SELECT * FROM country WHERE id = ?;";
     private static final String INSERT_COUNTRY = "INSERT INTO `country` VALUES (?, ?);";
+    private static final String FIND_ID_BY_NAME = "SELECT country.id FROM country WHERE name LIKE ?;";
     private List<Country> countryList;
+
+    public int findIdByName(String name) throws SQLException {
+        preparedStatement = startConnect(FIND_ID_BY_NAME);
+        preparedStatement.setString(1, "%" + name + "%");
+        rs = preparedStatement.executeQuery();
+        while (rs.next()) {
+            return rs.getInt("id");
+        }
+        System.out.println(this.getClass() + " select: " + preparedStatement);
+        closeConnect();
+        return -1;
+    }
     @Override
     public void insert(Country country) {
         try {

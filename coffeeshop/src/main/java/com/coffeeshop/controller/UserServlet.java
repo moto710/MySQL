@@ -92,7 +92,6 @@ public class UserServlet extends HttpServlet {
         userDAO.update(new User(id, userName, passWord, fullName, phone, email, idCountry, image, bio));
         message = "Change your information success!";
         req.setAttribute("message", message);
-//        resp.sendRedirect("/home");
         req.getRequestDispatcher("WEB-INF/index/mainJsp/edit.jsp").forward(req, resp);
     }
 

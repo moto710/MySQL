@@ -8,6 +8,7 @@
           <h2 class="text-primary font-weight-medium m-0">We Have Been Serving</h2>
           <h1 class="display-1 text-white m-0">COFFEE</h1>
           <h2 class="text-white m-0">* SINCE 1950 *</h2>
+          <h3 class="text-white m-0">Warming welcome ${sessionScope.userName}</h3>
         </div>
       </div>
       <div class="carousel-item">

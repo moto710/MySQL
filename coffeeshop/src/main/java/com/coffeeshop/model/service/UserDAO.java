@@ -14,10 +14,10 @@ public class UserDAO extends RootDAO implements IDAO<User> {
     private static final String DELETE_USERS_BY_ID = "DELETE FROM `users` WHERE `id` = ?;";
     private static final String UPDATE_USERS = "UPDATE users SET `userName` = ?, passWord = ?, fullName = ?, phone = ?, email = ?, idCountry = ?, image = ?, bio = ? WHERE `id` = ?;";
     private static final String FIND_MAX_ID = "SELECT MAX(`id`) AS id FROM users;";
-    public final String PAGINATION = "SELECT SQL_CALC_FOUND_ROWS * FROM `users` WHERE `userName` LIKE ? OR `fullName` LIKE ? OR `email` LIKE ? OR `phone` LIKE ? OR `bio` LIKE ? ORDER BY %s %s limit ?, ?;";
-
+    private final String PAGINATION = "SELECT SQL_CALC_FOUND_ROWS * FROM `users` WHERE `userName` LIKE ? OR `fullName` LIKE ? OR `email` LIKE ? OR `phone` LIKE ? OR `bio` LIKE ? OR idCountry = ? ORDER BY %s %s limit ?, ?;";
     private User user;
     private List<User> userList;
+    private CountryDAO countryDAO = new CountryDAO();
     public int noOfRecords;
 
     public int getNoOfRecords() {
@@ -28,8 +28,7 @@ public class UserDAO extends RootDAO implements IDAO<User> {
         this.noOfRecords = noOfRecords;
     }
 
-    public List<User> paginationView(int offset, int noOfRecords, String keyword, String orderBy, String order) {
-
+    public List<User> paginationView(int offset, int noOfRecords, String keyword, String orderBy, String order){
         String fmtPAGINATION = String.format(PAGINATION,orderBy, order);
         userList = new ArrayList<>();
         try {
@@ -39,8 +38,9 @@ public class UserDAO extends RootDAO implements IDAO<User> {
             preparedStatement.setString(3, "%" + keyword + "%");
             preparedStatement.setString(4, "%" + keyword + "%");
             preparedStatement.setString(5, "%" + keyword + "%");
-            preparedStatement.setInt(6, offset);
-            preparedStatement.setInt(7, noOfRecords);
+            preparedStatement.setInt(6, countryDAO.findIdByName(keyword));
+            preparedStatement.setInt(7, offset);
+            preparedStatement.setInt(8, noOfRecords);
             rs = preparedStatement.executeQuery();
             System.out.println(this.getClass() + " paginationView: " + preparedStatement);
             while (rs.next()) {
