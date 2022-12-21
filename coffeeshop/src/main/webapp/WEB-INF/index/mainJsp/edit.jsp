@@ -122,7 +122,7 @@
 
         <div>
             <label for="idCountry">Select Your Country:</label>
-            <select id="idCountry" name="idCountry">
+            <select id="idCountry" name="idCountry" onchange="handleCountryCreate()">
                 <c:forEach items="${requestScope.countryList}" var="country">
                     <option value="${country.getId()}"<c:if
                             test="${country.getId() eq requestScope.user.getIdCountry() || requestScope.idCountry eq country.getId()}">
@@ -130,6 +130,7 @@
                     </c:if>
                     >${country.getName()}</option>
                 </c:forEach>
+                <option value="-1">Don't have your country??? Add now!</option>
             </select>
 
             <div class="valid-feedback">Valid.</div>
@@ -165,5 +166,13 @@
 
 <!-- Back to Top -->
 <jsp:include page="/WEB-INF/index/layout/backToTop.jsp"></jsp:include>
+
+<script>
+    function handleCountryCreate() {
+        if (document.getElementById("idCountry").value == -1) {
+            window.open("/country?addCountry=add", "_blank");
+        }
+    }
+</script>
 </body>
 </html>

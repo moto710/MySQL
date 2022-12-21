@@ -15,6 +15,22 @@
 <jsp:include page="/WEB-INF/index/layout/carousel.jsp"></jsp:include>
 <!-- Carousel End -->
 
+<c:if test="${sessionScope.message ne null}">
+    <script>
+        let msg = '<%= session.getAttribute("message") %>';
+        Swal.fire({
+            title: msg,
+            showClass: {
+                popup: 'animate__animated animate__fadeInDown'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__fadeOutUp'
+            }
+        })
+    </script>
+</c:if>
+
+
 
 <c:if test="${requestScope.user ne null}">
     <script>
@@ -81,11 +97,11 @@
 
         <div>
             <label for="idCountry">Select Your Country:</label>
-            <select id="idCountry" name="idCountry">
+            <select id="idCountry" name="idCountry" onchange="handleCountryCreate()">
                 <c:forEach items="${requestScope.countryList}" var="country">
                     <option value="${country.getId()}">${country.getName()}</option>
                 </c:forEach>
-                <a><option >Don't have your country??? Add now!</option></a>
+                <option value="-1">Don't have your country??? Add now!</option>
             </select>
 
             <div class="valid-feedback">Valid.</div>
@@ -99,7 +115,8 @@
         </div>
         <div class="form-group">
             <label for="bio">Your Short Bio (Optional):</label>
-            <textarea class="form-control" id="bio"name="bio" value="${requestScope.user.getBio()}" rows="3"></textarea>
+            <textarea class="form-control" id="bio" name="bio" value="${requestScope.user.getBio()}"
+                      rows="3"></textarea>
         </div>
         <div class="form-group form-check">
             <label class="form-check-label">
@@ -119,5 +136,13 @@
 
 <!-- Back to Top -->
 <jsp:include page="/WEB-INF/index/layout/backToTop.jsp"></jsp:include>
+
+<script>
+    function handleCountryCreate() {
+        if (document.getElementById("idCountry").value == -1) {
+            window.open("/country?addCountry=add", "_blank");
+        }
+    }
+</script>
 </body>
 </html>

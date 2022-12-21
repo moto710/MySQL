@@ -32,7 +32,7 @@ public class UserDAO extends RootDAO implements IDAO<User> {
 
         String fmtPAGINATION = String.format(PAGINATION,orderBy, order);
         userList = new ArrayList<>();
-        try { //SELECT SQL_CALC_FOUND_ROWS * FROM `users` WHERE `userName` LIKE ? OR `fullName` LIKE ? OR `email` LIKE ? OR `phone` LIKE ? OR `bio` LIKE ? ORDER BY %s %s limit ?, ?;
+        try {
             preparedStatement = startConnect(fmtPAGINATION);
             preparedStatement.setString(1, "%" + keyword + "%");
             preparedStatement.setString(2, "%" + keyword + "%");

@@ -162,7 +162,7 @@ public class UserServlet extends HttpServlet {
         req.setAttribute("keyword", keyword);
         req.setAttribute("userList", userList);
         req.setAttribute("noOfPages", noOfPages);
-        req.setAttribute("currentPage", page);
+        req.setAttribute("page", page);
         req.setAttribute("sort", sort);
         req.setAttribute("recordsPerPage", recordsPerPage);
         req.getRequestDispatcher("WEB-INF/index/mainJsp/userManager.jsp").forward(req, resp);
@@ -266,10 +266,6 @@ public class UserServlet extends HttpServlet {
     }
 
     protected String getAction(HttpServletRequest req) {
-        String action = req.getParameter("action");
-        if (action == null) {
-            action = "";
-        }
-        return action;
+        return req.getParameter("action") == null ? "" : req.getParameter("action");
     }
 }

@@ -68,29 +68,29 @@
             <thead>
             <tr>
                 <th rowspan="2">ID</th>
-                <th>
-                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=idAsc&keyword=${requestScope.keyword}&recordsPerPage=${requestScope.recordsPerPage}&currentPage=${requestScope.currentPage}"><i
+                <th style="border: none">
+                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=idAsc&keyword=${requestScope.keyword}&recordsPerPage=${requestScope.recordsPerPage}&page=${requestScope.page}"><i
                             class="fa fa-chevron-up"></i></a></th>
                 <th rowspan="2">User Name</th>
                 <th>
-                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=userNameAsc&keyword=${requestScope.keyword}&recordsPerPage=${requestScope.recordsPerPage}&currentPage=${requestScope.currentPage}"><i
+                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=userNameAsc&keyword=${requestScope.keyword}&recordsPerPage=${requestScope.recordsPerPage}&page=${requestScope.page}"><i
                             class="fa fa-chevron-up"></i></a></th>
                 <th rowspan="2" colspan="2">Image</th>
                 <th rowspan="2">Full Name</th>
                 <th>
-                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=fullNameAsc&keyword=${requestScope.keyword}&recordsPerPage=${requestScope.recordsPerPage}&currentPage=${requestScope.currentPage}"><i
+                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=fullNameAsc&keyword=${requestScope.keyword}&recordsPerPage=${requestScope.recordsPerPage}&page=${requestScope.page}"><i
                             class="fa fa-chevron-up"></i></a></th>
                 <th rowspan="2">Phone Number</th>
                 <th>
-                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=phoneAsc&keyword=${requestScope.keyword}&recordsPerPage=${requestScope.recordsPerPage}&currentPage=${requestScope.currentPage}"><i
+                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=phoneAsc&keyword=${requestScope.keyword}&recordsPerPage=${requestScope.recordsPerPage}&page=${requestScope.page}"><i
                             class="fa fa-chevron-up"></i></a></th>
                 <th rowspan="2">Email</th>
                 <th>
-                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=emailAsc&keyword=${requestScope.keyword}&recordsPerPage=${requestScope.recordsPerPage}&currentPage=${requestScope.currentPage}"><i
+                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=emailAsc&keyword=${requestScope.keyword}&recordsPerPage=${requestScope.recordsPerPage}&page=${requestScope.page}"><i
                             class="fa fa-chevron-up"></i></a></th>
                 <th rowspan="2">Country</th>
                 <th>
-                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=addressAsc&keyword=${requestScope.keyword}&recordsPerPage=${requestScope.recordsPerPage}&currentPage=${requestScope.currentPage}"><i
+                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=addressAsc&keyword=${requestScope.keyword}&recordsPerPage=${requestScope.recordsPerPage}&page=${requestScope.page}"><i
                             class="fa fa-chevron-up"></i></a></th>
                 <th rowspan="2" colspan="2">Bio</th>
                 <th rowspan="2">Action</th>
@@ -98,26 +98,26 @@
 
             <tr>
                 <th>
-                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=idDesc&keyword=${requestScope.keyword}&recordsPerPage=${requestScope.recordsPerPage}&currentPage=${requestScope.currentPage}"><i
+                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=idDesc&keyword=${requestScope.keyword}&recordsPerPage=${requestScope.recordsPerPage}&page=${requestScope.page}"><i
                             class="fa fa-chevron-down"></i></a></th>
                 <th>
-                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=userNameDesc&keyword=${requestScope.keyword}&recordsPerPage=${requestScope.recordsPerPage}&currentPage=${requestScope.currentPage}"><i
+                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=userNameDesc&keyword=${requestScope.keyword}&recordsPerPage=${requestScope.recordsPerPage}&page=${requestScope.page}"><i
                             class="fa fa-chevron-down"></i></a>
                 </th>
                 <th>
-                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=fullNameDesc&keyword=${requestScope.keyword}&recordsPerPage=${requestScope.recordsPerPage}&currentPage=${requestScope.currentPage}"><i
+                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=fullNameDesc&keyword=${requestScope.keyword}&recordsPerPage=${requestScope.recordsPerPage}&page=${requestScope.page}"><i
                             class="fa fa-chevron-down"></i></a>
                 </th>
                 <th>
-                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=phoneDesc&keyword=${requestScope.keyword}&recordsPerPage=${requestScope.recordsPerPage}&currentPage=${requestScope.currentPage}"><i
+                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=phoneDesc&keyword=${requestScope.keyword}&recordsPerPage=${requestScope.recordsPerPage}&page=${requestScope.page}"><i
                             class="fa fa-chevron-down"></i></a>
                 </th>
                 <th>
-                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=emailDesc&keyword=${requestScope.keyword}&recordsPerPage=${requestScope.recordsPerPage}&currentPage=${requestScope.currentPage}"><i
+                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=emailDesc&keyword=${requestScope.keyword}&recordsPerPage=${requestScope.recordsPerPage}&page=${requestScope.page}"><i
                             class="fa fa-chevron-down"></i></a>
                 </th>
                 <th>
-                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=addressDesc&keyword=${requestScope.keyword}&recordsPerPage=${requestScope.recordsPerPage}&currentPage=${requestScope.currentPage}"><i
+                    <a href="${pageContext.request.contextPath}/home?action=manager&sort=addressDesc&keyword=${requestScope.keyword}&recordsPerPage=${requestScope.recordsPerPage}&page=${requestScope.page}"><i
                             class="fa fa-chevron-down"></i></a>
                 </th>
             </tr>
@@ -152,17 +152,17 @@
             <ul class="pagination">
                 <li class="page-item">
                     <a class="page-link"
-                       href="${pageContext.request.contextPath}/home?action=manager&page=${requestScope.currentPage - 1}">previous</a>
+                       href="${pageContext.request.contextPath}/home?action=manager&page=${requestScope.page - 1}&recordsPerPage=${requestScope.recordsPerPage}">previous</a>
                 </li>
                 <c:forEach begin="1" end="${requestScope.noOfPages}" var="i">
                     <li class="page-item">
                         <a class="page-link"
-                           href="${pageContext.request.contextPath}/home?action=manager&page=${i}">${i}</a>
+                           href="${pageContext.request.contextPath}/home?action=manager&page=${i}&recordsPerPage=${requestScope.recordsPerPage}">${i}</a>
                     </li>
                 </c:forEach>
                 <li class="page-item">
                     <a class="page-link"
-                       href="${pageContext.request.contextPath}/home?action=manager&page=${requestScope.currentPage + 1}">Next</a>
+                       href="${pageContext.request.contextPath}/home?action=manager&page=${requestScope.page + 1}&recordsPerPage=${requestScope.recordsPerPage}">Next</a>
                 </li>
 
             </ul>
@@ -170,16 +170,16 @@
             <ul class="pagination justify-content-end">
                 <li class="page-item page-link">Show number of records:</li>
                 <li class="page-item"><a class="page-link"
-                                         href="${pageContext.request.contextPath}/home?action=manager&recordsPerPage=5">5</a>
+                                         href="${pageContext.request.contextPath}/home?action=manager&recordsPerPage=5&page=${requestScope.page}">5</a>
                 </li>
                 <li class="page-item"><a class="page-link"
-                                         href="${pageContext.request.contextPath}/home?action=manager&recordsPerPage=10">10</a>
+                                         href="${pageContext.request.contextPath}/home?action=manager&recordsPerPage=10&page=${requestScope.page}">10</a>
                 </li>
                 <li class="page-item"><a class="page-link"
-                                         href="${pageContext.request.contextPath}/home?action=manager&recordsPerPage=15">15</a>
+                                         href="${pageContext.request.contextPath}/home?action=manager&recordsPerPage=15&page=${requestScope.page}">15</a>
                 </li>
                 <li class="page-item"><a class="page-link"
-                                         href="${pageContext.request.contextPath}/home?action=manager&recordsPerPage=50">50</a>
+                                         href="${pageContext.request.contextPath}/home?action=manager&recordsPerPage=50&page=${requestScope.page}">50</a>
                 </li>
             </ul>
         </div>
