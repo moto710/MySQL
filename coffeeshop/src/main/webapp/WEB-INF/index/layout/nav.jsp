@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!-- Navbar Start -->
 <div class="container-fluid p-0 nav-bar">
     <nav class="navbar navbar-expand-lg bg-none navbar-dark py-3">
@@ -11,7 +13,13 @@
                        class="nav-item nav-link active">About</a>
                     <a href="${pageContext.request.contextPath}/home?action=manager" class="nav-item nav-link">User
                         Manager</a>
-                    <a href="${pageContext.request.contextPath}/login" class="nav-item nav-link">Login</a>
+
+                    <a href="${pageContext.request.contextPath}/logout" class="nav-item nav-link"
+                       <c:if test="${sessionScope.userName eq null}">hidden</c:if>>Logout</a>
+
+                    <a href="${pageContext.request.contextPath}/login" class="nav-item nav-link"
+                       <c:if test="${sessionScope.userName ne null}">hidden</c:if>>Login</a>
+
                 </div>
             </form>
         </div>

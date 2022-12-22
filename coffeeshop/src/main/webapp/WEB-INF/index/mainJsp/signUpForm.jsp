@@ -32,21 +32,21 @@
 
 
 
-<c:if test="${requestScope.user ne null}">
-    <script>
-        let name = '<%= ((User) request.getAttribute("user")).getFullName() %>';
-        Swal.fire({
-            title: 'Welcome ' + name,
-            text: 'to coffee world',
-            showClass: {
-                popup: 'animate__animated animate__fadeInDown'
-            },
-            hideClass: {
-                popup: 'animate__animated animate__fadeOutUp'
-            }
-        })
-    </script>
-</c:if>
+<%--<c:if test="${requestScope.user ne null}">--%>
+<%--    <script>--%>
+<%--        let name = '<%= ((User) request.getAttribute("user")).getFullName() %>';--%>
+<%--        Swal.fire({--%>
+<%--            title: 'Welcome ' + name,--%>
+<%--            text: 'to coffee world',--%>
+<%--            showClass: {--%>
+<%--                popup: 'animate__animated animate__fadeInDown'--%>
+<%--            },--%>
+<%--            hideClass: {--%>
+<%--                popup: 'animate__animated animate__fadeOutUp'--%>
+<%--            }--%>
+<%--        })--%>
+<%--    </script>--%>
+<%--</c:if>--%>
 
 
 <div class="container">
