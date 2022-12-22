@@ -13,7 +13,7 @@ import java.io.IOException;
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
     private UserDAO userDAO = new UserDAO();
-    public String messageLogin;
+    public String message;
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("/WEB-INF/index/mainJsp/login.jsp").forward(req, resp);
@@ -29,7 +29,8 @@ public class LoginServlet extends HttpServlet {
             httpSession.setAttribute("passWord", passWord);
             resp.sendRedirect("/home");
         } else {
-            messageLogin = "Can't find your account, try again!";
+            message = "Can't find your account, try again!";
+            req.setAttribute("message", message);
             req.getRequestDispatcher("WEB-INF/index/mainJsp/login.jsp").forward(req, resp);
         }
     }

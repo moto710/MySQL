@@ -22,20 +22,6 @@
 <jsp:include page="/WEB-INF/index/layout/carousel.jsp"></jsp:include>
 <!-- Carousel End -->
 
-<c:if test="${sessionScope.userName ne null}">
-    <script>
-        let name = '${sessionScope.userName}';
-        Swal.fire({
-            title: 'welcome back ' + name,
-            showClass: {
-                popup: 'animate__animated animate__fadeInDown'
-            },
-            hideClass: {
-                popup: 'animate__animated animate__fadeOutUp'
-            }
-        })
-    </script>
-</c:if>
 
 <c:if test="${requestScope.message ne null}">
     <script>
@@ -160,17 +146,17 @@
             <ul class="pagination">
                 <li class="page-item">
                     <a class="page-link"
-                       href="${pageContext.request.contextPath}/home?action=manager&page=${requestScope.page - 1}&recordsPerPage=${requestScope.recordsPerPage}&keyword=${requestScope.keyword}">previous</a>
+                       href="${pageContext.request.contextPath}/home?action=manager&page=${requestScope.page - 1}&recordsPerPage=${requestScope.recordsPerPage}&keyword=${requestScope.keyword}&sort=${requestScope.sort}">previous</a>
                 </li>
                 <c:forEach begin="1" end="${requestScope.noOfPages}" var="i">
                     <li class="page-item">
                         <a class="page-link"
-                           href="${pageContext.request.contextPath}/home?action=manager&page=${i}&recordsPerPage=${requestScope.recordsPerPage}&keyword=${requestScope.keyword}">${i}</a>
+                           href="${pageContext.request.contextPath}/home?action=manager&page=${i}&recordsPerPage=${requestScope.recordsPerPage}&keyword=${requestScope.keyword}&sort=${requestScope.sort}">${i}</a>
                     </li>
                 </c:forEach>
                 <li class="page-item">
                     <a class="page-link"
-                       href="${pageContext.request.contextPath}/home?action=manager&page=${requestScope.page + 1}&recordsPerPage=${requestScope.recordsPerPage}&keyword=${requestScope.keyword}">Next</a>
+                       href="${pageContext.request.contextPath}/home?action=manager&page=${requestScope.page + 1}&recordsPerPage=${requestScope.recordsPerPage}&keyword=${requestScope.keyword}&sort=${requestScope.sort}">Next</a>
                 </li>
 
             </ul>
@@ -178,16 +164,16 @@
             <ul class="pagination justify-content-end">
                 <li class="page-item page-link">Show number of records:</li>
                 <li class="page-item"><a class="page-link"
-                                         href="${pageContext.request.contextPath}/home?action=manager&recordsPerPage=5&page=${requestScope.page}&keyword=${requestScope.keyword}">5</a>
+                                         href="${pageContext.request.contextPath}/home?action=manager&recordsPerPage=5&page=${requestScope.page}&keyword=${requestScope.keyword}&sort=${requestScope.sort}">5</a>
                 </li>
                 <li class="page-item"><a class="page-link"
-                                         href="${pageContext.request.contextPath}/home?action=manager&recordsPerPage=10&page=${requestScope.page}&keyword=${requestScope.keyword}">10</a>
+                                         href="${pageContext.request.contextPath}/home?action=manager&recordsPerPage=10&page=${requestScope.page}&keyword=${requestScope.keyword}&sort=${requestScope.sort}">10</a>
                 </li>
                 <li class="page-item"><a class="page-link"
-                                         href="${pageContext.request.contextPath}/home?action=manager&recordsPerPage=15&page=${requestScope.page}&keyword=${requestScope.keyword}">15</a>
+                                         href="${pageContext.request.contextPath}/home?action=manager&recordsPerPage=15&page=${requestScope.page}&keyword=${requestScope.keyword}&sort=${requestScope.sort}">15</a>
                 </li>
                 <li class="page-item"><a class="page-link"
-                                         href="${pageContext.request.contextPath}/home?action=manager&recordsPerPage=50&page=${requestScope.page}&keyword=${requestScope.keyword}">50</a>
+                                         href="${pageContext.request.contextPath}/home?action=manager&recordsPerPage=50&page=${requestScope.page}&keyword=${requestScope.keyword}&sort=${requestScope.sort}">50</a>
                 </li>
             </ul>
         </div>

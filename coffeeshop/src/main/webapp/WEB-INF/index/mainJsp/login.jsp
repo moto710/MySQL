@@ -4,14 +4,19 @@
 <head>
     <title>Login</title>
     <jsp:include page="/WEB-INF/index/layout/head.jsp"></jsp:include>
+    <style>
+        .col-6{
+            margin: auto;
+        }
+    </style>
 </head>
 <body>
 
-<c:if test="${requestScope.messageLogin}">
+<c:if test="${requestScope.message ne null}">
     <script>
-        let name = '<c:out value="${requestScope.messageLogin}"/>';
+        let msg = '<c:out value="${requestScope.message}"/>';
         Swal.fire({
-            title: name,
+            title: msg,
             showClass: {
                 popup: 'animate__animated animate__fadeInDown'
             },
@@ -22,15 +27,14 @@
     </script>
 </c:if>
 
-<form class="modal-content animate" method="post">
-    <div class="imgcontainer">
-        <a href="${pageContext.request.contextPath}/home"><i class="fa fa-times close"></i></a>
-        <img src="${pageContext.request.contextPath}/coffee/img/img_avatar2.png" alt="Avatar"
-             class="avatar">
-    </div>
-
-    <div class="container">
-        <div>
+<div class="container">
+    <form class="modal-content animate" method="post">
+        <div  class="col-6">
+            <div class="imgcontainer">
+                <a href="${pageContext.request.contextPath}/home"><i class="fa fa-times close"></i></a>
+                <img src="${pageContext.request.contextPath}/coffee/img/img_avatar2.png" alt="Avatar"
+                     class="avatar">
+            </div>
             <form method="post" action="${pageContext.request.contextPath}/home">
                 <input hidden name="action" value="login">
                 <label for="userName"><b>Username</b></label>
@@ -42,20 +46,22 @@
                 <button type="submit">Login</button>
                 <label><input type="checkbox" checked="checked" name="remember">Remember me</label>
             </form>
-        </div>
-        <div class="d-flex justify-content-between">
-            <div>
-                <a href="${pageContext.request.contextPath}/home"><button type="button" class="cancelbtn">Cancel</button></a>
-            </div>
-            <div style="white-space: pre;">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <a href="${pageContext.request.contextPath}/home">
+                        <button type="button" class="cancelbtn">Cancel</button>
+                    </a>
+                </div>
+                <div style="white-space: pre;">
                             <span class="psw open-button"> Or <a
                                     href="${pageContext.request.contextPath}/home?action=signUp">create new account</a></span><span
-                    class="psw">Forgot <a
-                    href="${pageContext.request.contextPath}/home?action=forgotPW">password?</a></span>
+                        class="psw">Forgot <a
+                        href="${pageContext.request.contextPath}/home?action=forgotPW">password?</a></span>
+                </div>
             </div>
         </div>
-    </div>
-</form>
+    </form>
+</div>
 
 
 <!-- Footer Start -->

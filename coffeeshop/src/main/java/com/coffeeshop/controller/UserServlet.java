@@ -41,8 +41,11 @@ public class UserServlet extends HttpServlet {
             case "remove":
                 showRemoveView(req, resp);
                 break;
-            default:
+            case "manager":
                 showUserManagerView(req, resp);
+                break;
+            default:
+                showHomePage(req, resp);
                 break;
         }
     }
@@ -258,6 +261,9 @@ public class UserServlet extends HttpServlet {
         }
     }
 
+    public void showHomePage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getRequestDispatcher("WEB-INF/index/mainJsp/index.jsp").forward(req,resp);
+    }
     private void showSignUpView(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         countryList = countryDAO.selectAll();
         req.setAttribute("countryList", countryList);
