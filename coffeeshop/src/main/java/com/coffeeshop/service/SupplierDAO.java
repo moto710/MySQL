@@ -1,4 +1,4 @@
-package com.coffeeshop.model.service;
+package com.coffeeshop.service;
 
 import com.coffeeshop.model.Supplier;
 

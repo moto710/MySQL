@@ -1,7 +1,7 @@
 package com.coffeeshop.controller;
 
 import com.coffeeshop.model.Country;
-import com.coffeeshop.model.service.CountryDAO;
+import com.coffeeshop.service.CountryDAO;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

@@ -1,6 +1,6 @@
 package com.coffeeshop.controller;
 
-import com.coffeeshop.model.service.UserDAO;
+import com.coffeeshop.service.UserDAO;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

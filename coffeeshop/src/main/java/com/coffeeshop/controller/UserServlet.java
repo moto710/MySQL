@@ -2,8 +2,8 @@ package com.coffeeshop.controller;
 
 import com.coffeeshop.model.Country;
 import com.coffeeshop.model.User;
-import com.coffeeshop.model.service.CountryDAO;
-import com.coffeeshop.model.service.UserDAO;
+import com.coffeeshop.service.CountryDAO;
+import com.coffeeshop.service.UserDAO;
 import com.coffeeshop.model.utils.ValidateUser;
 
 import java.io.*;
@@ -65,9 +65,6 @@ public class UserServlet extends HttpServlet {
             case "edit":
                 editUser(req, resp);
                 break;
-//            default:
-//                showLoginView(req, resp);
-//                break;
         }
     }
 
